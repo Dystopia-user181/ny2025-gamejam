@@ -7,16 +7,16 @@ import { WorkHandler } from "@/js/work";
 
 let lastTick = Date.now();
 
-export function gameLoop(_diff?: number) {
-	let diff: number;
-	if (_diff) {
-		diff = _diff;
+export function gameLoop(_dt?: number) {
+	let dt: number;
+	if (_dt) {
+		dt = _dt;
 	} else {
-		diff = (Date.now() - lastTick) / 1000;
+		dt = (Date.now() - lastTick) / 1000;
 		lastTick = Date.now();
 	}
-	WorkHandler.tick(diff);
 	LogicEvent.dispatch("GAME_TICK_BEFORE");
+	WorkHandler.tick(dt);
 	GameUI.update();
 	LogicEvent.dispatch("GAME_TICK_AFTER");
 }

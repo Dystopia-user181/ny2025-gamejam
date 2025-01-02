@@ -1,18 +1,24 @@
-<script setup>
+<script setup lang="ts">
+import SolUpgrade from "./SolUpgrade.vue";
 import StressMilestone from "./StressMilestone.vue";
 
 import { format } from "@/utils";
 
 import { player } from "@/js/player";
+import { SolUpgrades } from "@/js/work/solupgrades";
 import { StressMilestones } from "@/js/work/stress";
 import { WorkHandler } from "@/js/work";
+import { WorkState } from "@/js/player-type";
 </script>
 
 <template>
 	<div class="c-section-work">
 		<div class="c-header">
 			<button
-				class="c-work-btn"
+				:class="{
+					'c-button-unspecified c-work-btn': true,
+					'c-work-btn--active': player.work.workState === WorkState.work,
+				}"
 				:style="{
 					background: `linear-gradient(
 						to right,
@@ -25,13 +31,24 @@ import { WorkHandler } from "@/js/work";
 			>
 				Work
 			</button>
-			<span v-if="player.work.maxMoney > 2">
-				>>> Solarity: {{ format(player.work.money, 3, 2) }}
+			<span v-if="player.work.maxSolarity > 2">
+				>>> Solarity: {{ format(player.work.solarity, 3, 2) }}
 			</span>
+		</div>
+		<br>
+		<div
+			v-if="player.work.maxSolarity >= 24"
+			class="c-sol-upg-grid"
+		>
+			<SolUpgrade
+				v-for="(_, upg) in SolUpgrades"
+				:key="'solupg' + _.config.id"
+				:upg-name="upg"
+			/>
 		</div>
 	</div>
 	<div
-		v-if="player.work.maxMoney >= 10"
+		v-if="player.work.maxSolarity >= 10"
 		class="c-section-stress"
 	>
 		<div class="c-header">
@@ -39,31 +56,31 @@ import { WorkHandler } from "@/js/work";
 		</div>
 		<StressMilestone
 			v-for="(_, milestone) in StressMilestones"
-			:key="_.id"
+			:key="'stressmstn' + _.config.id"
 			:upg-name="milestone"
 		/>
 	</div>
 </template>
 
 <style scoped>
+.c-section-work, .c-section-stress {
+	height: 50%;
+	padding: 10px;
+	font-size: 12px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	overflow: auto;
+}
+
 .c-section-work {
 	background-color: #222;
 	color: white;
-	height: 50%;
-	padding: 10px;
-	font-size: 14px;
-	text-align: center;
 }
 
 .c-section-stress {
 	background-color: #999;
 	color: black;
-	height: 50%;
-	padding: 10px;
-	font-size: 14px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 }
 
 .c-header {
@@ -72,6 +89,19 @@ import { WorkHandler } from "@/js/work";
 
 .c-work-btn {
 	width: 100px;
-	padding: 7px;
+	height: 34px;
+	padding: 0;
+	border-width: 1px;
+	transition: box-shadow border-width 0.2s;
+}
+
+.c-work-btn--active {
+	cursor: default;
+	border-width: 4px;
+}
+
+.c-sol-upg-grid {
+	display: flex;
+	gap: 10px;
 }
 </style>

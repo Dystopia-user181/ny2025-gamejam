@@ -31,6 +31,7 @@ const milestone = StressMilestones[upgName];
 	text-align: left;
 	max-width: 600px;
 }
+
 .c-stress-milestone--unlocked {
 	opacity: 1;
 	background-color: #fff5;

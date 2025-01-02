@@ -1,6 +1,6 @@
 import { reactive, toRaw } from "vue";
 
-import { PlayerType } from "@/js/player-type";
+import { PlayerType, WorkState } from "@/js/player-type";
 
 import { migrations } from "@/js/migrations";
 import { Modals } from "@/js/ui/modals";
@@ -15,12 +15,17 @@ export const Player = {
 	defaultStart(): PlayerType {
 		return {
 			work: {
-				isWorking: false,
+				workState: WorkState.none,
 				progress: 0,
 				hours: 0,
-				money: 0,
-				maxMoney: 0,
+				solarity: 0,
+				maxSolarity: 0,
 				stress: 0,
+				upgrades: {
+					investing: -1,
+					progress: [],
+					amount: [],
+				}
 			},
 			options: {
 				autosave: 1,

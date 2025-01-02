@@ -30,11 +30,15 @@ export const StressMilestones = {
 	x2Efficiency: new StressMilestone({
 		id: 0,
 		threshold: 12,
-		effectName: "Working efficiency ×2",
+		effectName: "Working speed ×2",
 		description: "Stress ain't all bad...",
 		effect: () => 2,
 	}),
-};
-
-export const StressHandler = {
+	x15Efficiency: new StressMilestone({
+		id: 1,
+		threshold: 100,
+		effectName: "Working & upgrading speed ×1.5",
+		description: "A little bit of pressure gets you going",
+		effect: () => 1.5,
+	})
 };
