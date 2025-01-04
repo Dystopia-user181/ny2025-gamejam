@@ -9,23 +9,34 @@ export const WorkHandler = {
 		base *= StressMilestones.x2Efficiency.effectOrDefault(1);
 		base *= StressMilestones.x15Efficiency.effectOrDefault(1);
 		base *= SolUpgrades.tmpBoost.effect;
+		base /= StressMilestones.negativeE.effectOrDefault(1);
+		base *= SolUpgrades.efficiency1.effect;
 		return base;
 	},
 	get solIncrement() {
 		let base = 1;
 		base *= SolUpgrades.solarReturns.effect[0];
 		base *= SolUpgrades.slow.effect;
+		base *= SolUpgrades.dubious.effect[0];
+		base /= StressMilestones.negativeS.effectOrDefault(1);
 		return base;
 	},
 	get stressIncrement() {
 		let base = 1;
 		base *= SolUpgrades.solarReturns.effect[1];
+		base *= SolUpgrades.dubious.effect[1];
+		base *= SolUpgrades.unstress.effect;
+		base *= SolUpgrades.deathWish.effect;
 		return base;
+	},
+	get maxStress() {
+		return 1e6;
 	},
 	startWorking() {
 		player.work.workState = WorkState.work;
 	},
 	tick(dt: number) {
+		if (player.work.stress >= this.maxStress) return;
 		for (const upg of Object.values(SolUpgrades)) {
 			upg.tick(dt);
 		}

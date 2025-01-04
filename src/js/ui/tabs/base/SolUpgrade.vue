@@ -21,8 +21,8 @@ const upgrade = SolUpgrades[upgName];
 		:style="{
 			background: `linear-gradient(
 				to right,
-				rgba(30, 140, 30, 0.6),
-				rgba(30, 140, 30, 0.6) ${upgrade.progress / upgrade.cost * 130 - 30}%,
+				rgba(30, 160, 30, 0.6),
+				rgba(30, 160, 30, 0.6) ${upgrade.progress / upgrade.cost * 130 - 30}%,
 				rgba(255, 255, 255, 0.2) ${upgrade.progress / upgrade.cost * 130}%
 			)`
 		}"
@@ -32,7 +32,7 @@ const upgrade = SolUpgrades[upgName];
 		<br>
 		{{ upgrade.config.description }}
 		<br>
-		{{ format(upgrade.progress, 3, 2) }} / {{ format(upgrade.cost, 3, 2) }} solarity
+		{{ format(upgrade.progress, 3, 2) }} / {{ format(upgrade.cost, 3, 2) }} Solarity
 		<template v-if="upgrade.effectDisplay">
 			<br>
 			{{ upgrade.effectDisplay }}
@@ -44,9 +44,9 @@ const upgrade = SolUpgrades[upgName];
 .c-sol-upg {
 	width: 180px;
 	height: 100px;
-	padding: 7px;
+	padding: 0;
+	margin: 5px;
 	border-width: 1px;
-	transition: box-shadow border-width 0.2s;
 }
 
 .c-sol-upg--active {

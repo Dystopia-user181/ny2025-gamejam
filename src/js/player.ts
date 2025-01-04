@@ -25,7 +25,12 @@ export const Player = {
 					investing: -1,
 					progress: [],
 					amount: [],
-				}
+				},
+			},
+			rebirth: {
+				lunarity: 0,
+				maxLunarity: 0,
+				upgrades: 0,
 			},
 			options: {
 				autosave: 1,

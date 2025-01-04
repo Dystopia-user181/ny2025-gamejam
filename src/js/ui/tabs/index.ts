@@ -1,8 +1,9 @@
 import { player } from "@/js/player";
 
 import BaseTab from "./base/index.vue";
+import RebirthTab from "./rebirth/index.vue";
 
-export const TabTypes = ["base"] as const;
+export const TabTypes = ["base", "rebirth"] as const;
 export type TabType = typeof TabTypes[number];
 
 interface TabStateConfig {
@@ -41,7 +42,13 @@ export const Tabs = {
 		id: "base",
 		name: "Work",
 		component: BaseTab,
-	})
+	}),
+	"rebirth": new TabState({
+		id: "rebirth",
+		name: "Rebirth",
+		component: RebirthTab,
+		isUnlocked: () => player.rebirth.maxLunarity > 0
+	}),
 } as Record<TabType, TabState>;
 
 export function Tab(id: TabType | "current") {

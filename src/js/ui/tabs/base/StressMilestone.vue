@@ -12,6 +12,7 @@ const milestone = StressMilestones[upgName];
 
 <template>
 	<div
+		v-if="milestone.isUnlocked"
 		:class="{
 			'c-stress-milestone': true,
 			'c-stress-milestone--unlocked': milestone.canApply

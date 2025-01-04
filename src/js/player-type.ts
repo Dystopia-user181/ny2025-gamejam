@@ -18,8 +18,13 @@ export interface PlayerType {
 			investing: number,
 			progress: number[],
 			amount: number[],
-		}
-	}
+		},
+	},
+	rebirth: {
+		lunarity: number,
+		maxLunarity: number,
+		upgrades: number,
+	},
 	options: {
 		autosave: number,
 		exportCount: number,

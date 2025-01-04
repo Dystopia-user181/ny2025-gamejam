@@ -40,5 +40,21 @@ export const StressMilestones = {
 		effectName: "Working & upgrading speed ×1.5",
 		description: "A little bit of pressure gets you going",
 		effect: () => 1.5,
-	})
+	}),
+	negativeE: new StressMilestone({
+		id: 2,
+		threshold: 1e4,
+		effectName: "Stress impacts working speed",
+		description: "A little too much pressure gets you un-going",
+		effect: () => Math.sqrt(player.work.stress / 1e4),
+		isUnlocked: () => player.work.stress >= 1e4,
+	}),
+	negativeS: new StressMilestone({
+		id: 3,
+		threshold: 5e5,
+		effectName: "Stress impacts Solarity gain",
+		description: "A big too much pressure gets you very un-going",
+		effect: () => player.work.stress / 5e5,
+		isUnlocked: () => player.work.stress >= 1e4,
+	}),
 };
