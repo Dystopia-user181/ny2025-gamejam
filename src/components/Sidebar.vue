@@ -36,7 +36,7 @@ import { Tabs } from "@/js/ui/tabs";
 
 <style scoped>
 .c-sidebar {
-	width: 160px;
+	width: 140px;
 	max-height: 100vh;
 	display: flex;
 	flex-direction: column;

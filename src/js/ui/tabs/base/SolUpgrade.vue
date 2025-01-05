@@ -21,9 +21,9 @@ const upgrade = SolUpgrades[upgName];
 		:style="{
 			background: `linear-gradient(
 				to right,
-				#3c7ac799,
-				#3c7ac799 ${upgrade.progress / upgrade.cost * 130 - 30}%,
-				#6669 ${upgrade.progress / upgrade.cost * 130}%
+				#325886,
+				#325886 ${upgrade.progress / upgrade.cost * 130 - 30}%,
+				#555b ${upgrade.progress / upgrade.cost * 130}%
 			)`
 		}"
 		@click="upgrade.isSelected ? upgrade.deselect() : upgrade.select()"

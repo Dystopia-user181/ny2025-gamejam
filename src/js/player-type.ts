@@ -9,6 +9,7 @@ export enum WorkState {
 export interface PlayerType {
 	work: {
 		workState: WorkState,
+		autoWork: boolean,
 		progress: number,
 		hours: number,
 		solarity: number,
@@ -24,6 +25,10 @@ export interface PlayerType {
 		lunarity: number,
 		maxLunarity: number,
 		upgrades: number,
+	},
+	shards: {
+		sol: number,
+		luna: number,
 	},
 	options: {
 		autosave: number,

@@ -15,6 +15,14 @@ import { WorkState } from "@/js/player-type";
 <template>
 	<template v-if="player.work.stress < WorkHandler.maxStress">
 		<div class="c-section-work">
+			<div
+				v-if="player.work.maxSolarity > 2 || player.rebirth.maxLunarity"
+				class="c-stat"
+			>
+				Solarity: +{{ format(WorkHandler.solIncrement) }} / work
+				<br>
+				Work speed: {{ format(WorkHandler.efficiency) }} / s
+			</div>
 			<div class="c-header">
 				<button
 					:class="{
@@ -22,7 +30,9 @@ import { WorkState } from "@/js/player-type";
 						'c-work-btn--active': player.work.workState === WorkState.work,
 					}"
 					:style="{
-						background: WorkHandler.efficiency > 10 ? 'rgba(30, 160, 30, 0.7)' : `linear-gradient(
+						background: WorkHandler.efficiency > 10 && player.work.autoWork
+							? 'rgba(30, 160, 30, 0.7)'
+							: `linear-gradient(
 							to right,
 							rgba(30, 160, 30, 0.6),
 							rgba(30, 160, 30, 0.6) ${player.work.progress * 130 - 30}%,
@@ -32,6 +42,9 @@ import { WorkState } from "@/js/player-type";
 					@click="WorkHandler.startWorking()"
 				>
 					Work
+					<span v-if="RebirthUpgrades[11].isBought">
+						{{ player.work.autoWork ? "ON" : "OFF" }}
+					</span>
 				</button>
 				<span v-if="player.work.maxSolarity > 2 || player.rebirth.maxLunarity">
 					>>> Solarity: {{ format(player.work.solarity, 3, 2) }}
@@ -61,6 +74,12 @@ import { WorkState } from "@/js/player-type";
 			v-if="player.work.maxSolarity >= 10 || player.rebirth.maxLunarity"
 			class="c-section-stress"
 		>
+			<div
+				v-if="player.work.maxSolarity > 2 || player.rebirth.maxLunarity"
+				class="c-stat"
+			>
+				Stress: +{{ format(WorkHandler.stressIncrement) }} / work
+			</div>
 			<div class="c-header">
 				Stress: {{ format(player.work.stress, 3, 2) }}
 				<span v-if="RebirthUpgrades[11].isBought">
@@ -99,7 +118,10 @@ import { WorkState } from "@/js/player-type";
 				<br><br>
 				You died due to excess stress
 			</h1>
-			<button @click="RebirthHandler.reset()">
+			<button
+				class="c-rebirth-btn"
+				@click="RebirthHandler.reset()"
+			>
 				Rebirth
 			</button>
 		</div>
@@ -114,6 +136,7 @@ import { WorkState } from "@/js/player-type";
 	flex-direction: column;
 	align-items: center;
 	overflow: auto;
+	position: relative;
 }
 
 .c-section-work {
@@ -132,6 +155,13 @@ import { WorkState } from "@/js/player-type";
 	font-size: 18px;
 }
 
+.c-stat {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	line-height: 1.2;
+}
+
 .c-work-btn {
 	width: 100px;
 	height: 36px;
@@ -148,5 +178,10 @@ import { WorkState } from "@/js/player-type";
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	gap: 10px;
+}
+
+.c-rebirth-btn {
+	font-size: 30px;
+	padding: 20px;
 }
 </style>

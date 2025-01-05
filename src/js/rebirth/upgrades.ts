@@ -55,14 +55,15 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 	13: new RebirthUpgradeState({
 		id: 2,
 		name: "13",
-		description: "???",
-		cost: 10000000,
+		description: "×3 upgrading speed",
+		cost: 16,
+		effect: () => 3,
 	}),
 	14: new RebirthUpgradeState({
 		id: 3,
 		name: "14",
 		description: "???",
-		cost: 10000000,
+		cost: 1e30,
 	}),
 	21: new RebirthUpgradeState({
 		id: 4,
@@ -82,8 +83,8 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 	23: new RebirthUpgradeState({
 		id: 6,
 		name: "23",
-		description: "???",
-		cost: 10000000,
+		description: "Unlock Sol shards",
+		cost: 100,
 	}),
 	24: new RebirthUpgradeState({
 		id: 7,
@@ -94,14 +95,16 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 	31: new RebirthUpgradeState({
 		id: 8,
 		name: "31",
-		description: "?",
-		cost: 1000000000000,
+		description: "Increase Solarity gain based on Solarity",
+		cost: 16,
+		effect: () => Math.log10(player.work.solarity + 10 ** 2.5) / 2.5,
+		effectDisplay: formatX,
 	}),
 	32: new RebirthUpgradeState({
 		id: 9,
 		name: "32",
-		description: "???",
-		cost: 10000000,
+		description: "Unlock Luna shards",
+		cost: 100,
 	}),
 	33: new RebirthUpgradeState({
 		id: 10,
@@ -112,6 +115,30 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 	34: new RebirthUpgradeState({
 		id: 11,
 		name: "34",
+		description: "???",
+		cost: 10000000,
+	}),
+	41: new RebirthUpgradeState({
+		id: 12,
+		name: "41",
+		description: "???",
+		cost: 10000000,
+	}),
+	42: new RebirthUpgradeState({
+		id: 13,
+		name: "42",
+		description: "???",
+		cost: 10000000,
+	}),
+	43: new RebirthUpgradeState({
+		id: 14,
+		name: "43",
+		description: "???",
+		cost: 10000000,
+	}),
+	44: new RebirthUpgradeState({
+		id: 15,
+		name: "44",
 		description: "???",
 		cost: 10000000,
 	}),

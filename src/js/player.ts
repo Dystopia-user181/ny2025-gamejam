@@ -16,6 +16,7 @@ export const Player = {
 		return {
 			work: {
 				workState: WorkState.none,
+				autoWork: false,
 				progress: 0,
 				hours: 0,
 				solarity: 0,
@@ -31,6 +32,10 @@ export const Player = {
 				lunarity: 0,
 				maxLunarity: 0,
 				upgrades: 0,
+			},
+			shards: {
+				sol: 0,
+				luna: 0,
 			},
 			options: {
 				autosave: 1,

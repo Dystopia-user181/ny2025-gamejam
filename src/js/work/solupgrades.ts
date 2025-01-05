@@ -33,6 +33,7 @@ export class SolUpgradeState<E = number> extends Effect<SolUpgradeConfig<E>, E> 
 	get speed() {
 		let speed = typeof this.config.speed === "function" ? this.config.speed() : this.config.speed;
 		speed *= StressMilestones.x15Efficiency.effectOrDefault(1);
+		speed *= RebirthUpgrades[13].effectOrDefault(1);
 		return speed;
 	}
 

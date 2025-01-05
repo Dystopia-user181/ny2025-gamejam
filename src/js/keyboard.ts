@@ -63,5 +63,3 @@ window.addEventListener("keyup", e => {
 			break;
 	} */
 });
-
-window.addEventListener("contextmenu", e => e.preventDefault());

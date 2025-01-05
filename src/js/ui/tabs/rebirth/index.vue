@@ -41,7 +41,6 @@ import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 	align-items: center;
 	overflow: auto;
 	background-color: #202;
-	transition: background-color 0.2s, border 0.2s, box-shadow 0.2s, padding 0.2s;
 }
 
 .c-header {

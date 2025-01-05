@@ -22,6 +22,8 @@ export const WorkHandler = {
 		base *= SolUpgrades.slow.effect;
 		base *= SolUpgrades.dubious.effect[0];
 		base /= StressMilestones.negativeS.effectOrDefault(1);
+		base *= RebirthUpgrades[31].effectOrDefault(1);
+		base *= RebirthUpgrades[13].effectOrDefault(1);
 		return base;
 	},
 	get stressIncrement() {
@@ -36,7 +38,10 @@ export const WorkHandler = {
 		return 1e6;
 	},
 	startWorking() {
-		if (RebirthUpgrades[11].isBought) return;
+		if (RebirthUpgrades[11].isBought) {
+			player.work.autoWork = !player.work.autoWork;
+			return;
+		}
 		player.work.workState = WorkState.work;
 	},
 	tick(dt: number) {
@@ -46,7 +51,7 @@ export const WorkHandler = {
 		}
 		SolUpgrades.tmpBoost.amount -= dt / 20;
 		SolUpgrades.tmpBoost.amount = Math.max(SolUpgrades.tmpBoost.amount, 0);
-		if (player.work.workState === WorkState.work || RebirthUpgrades[11].isBought) {
+		if (player.work.workState === WorkState.work || (RebirthUpgrades[11].isBought && player.work.autoWork)) {
 			player.work.progress += dt * this.efficiency;
 			if (player.work.progress >= 1) {
 				if (RebirthUpgrades[11].isBought) {
