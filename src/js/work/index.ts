@@ -1,4 +1,5 @@
 import { player } from "@/js/player";
+import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 import { SolUpgrades } from "./solupgrades";
 import { StressMilestones } from "./stress";
 import { WorkState } from "@/js/player-type";
@@ -11,6 +12,8 @@ export const WorkHandler = {
 		base *= SolUpgrades.tmpBoost.effect;
 		base /= StressMilestones.negativeE.effectOrDefault(1);
 		base *= SolUpgrades.efficiency1.effect;
+		base *= RebirthUpgrades[11].effectOrDefault(1);
+		base *= RebirthUpgrades[22].effectOrDefault(1);
 		return base;
 	},
 	get solIncrement() {
@@ -33,6 +36,7 @@ export const WorkHandler = {
 		return 1e6;
 	},
 	startWorking() {
+		if (RebirthUpgrades[11].isBought) return;
 		player.work.workState = WorkState.work;
 	},
 	tick(dt: number) {
@@ -42,14 +46,21 @@ export const WorkHandler = {
 		}
 		SolUpgrades.tmpBoost.amount -= dt / 20;
 		SolUpgrades.tmpBoost.amount = Math.max(SolUpgrades.tmpBoost.amount, 0);
-		if (player.work.workState === WorkState.work) {
+		if (player.work.workState === WorkState.work || RebirthUpgrades[11].isBought) {
 			player.work.progress += dt * this.efficiency;
 			if (player.work.progress >= 1) {
-				player.work.progress = 0;
-				player.work.solarity += this.solIncrement;
+				if (RebirthUpgrades[11].isBought) {
+					const w = Math.floor(player.work.progress);
+					player.work.solarity += w * this.solIncrement;
+					player.work.stress += w * this.stressIncrement;
+					player.work.progress -= w;
+				} else {
+					player.work.progress = 0;
+					player.work.solarity += this.solIncrement;
+					player.work.stress += this.stressIncrement;
+					player.work.workState = WorkState.none;
+				}
 				player.work.maxSolarity = Math.max(player.work.maxSolarity, player.work.solarity);
-				player.work.stress += this.stressIncrement;
-				player.work.workState = WorkState.none;
 			}
 		}
 	},

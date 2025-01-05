@@ -1,16 +1,16 @@
-import { BitUpgradeState } from "@/utils";
+import { BitUpgradeState, formatX } from "@/utils";
 
 import { player } from "@/js/player";
+import { SolUpgrades } from "@/js/work/solupgrades";
 
 interface RebirthUpgradeConfig<E> {
 	id: number,
 	name: string,
 	description: string,
 	cost: number,
-	effect: () => E,
+	effect?: () => E,
 	effectDisplay?: (x: E) => string,
 	isUnlocked?: () => boolean,
-	isBuyable?: () => boolean,
 }
 
 export class RebirthUpgradeState<E = number> extends BitUpgradeState<RebirthUpgradeConfig<E>, E> {
@@ -22,12 +22,109 @@ export class RebirthUpgradeState<E = number> extends BitUpgradeState<RebirthUpgr
 	get currencyAmount() { return player.rebirth.lunarity; }
 	set currencyAmount(x) { player.rebirth.lunarity = x; }
 
-	get effect() { return this.config.effect(); }
+	get effect() {
+		if (!this.config.effect) throw `Effect not defined for Rebirth Upgrade id ${this.config.id}`;
+		return this.config.effect();
+	}
 
 	get effectDisplay() {
 		if (!this.config.effectDisplay) return "";
 		return this.config.effectDisplay(this.effect);
 	}
+
+	get isUnlocked() {
+		return this.config.isUnlocked?.() ?? true;
+	}
 }
 
-export const RebirthUpgrades = {};
+export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
+	11: new RebirthUpgradeState({
+		id: 0,
+		name: "11",
+		description: "×3 working speed, work is done automatically",
+		cost: 1,
+		effect: () => 3
+	}),
+	12: new RebirthUpgradeState({
+		id: 1,
+		name: "12",
+		description: "'Destress' now gives ×0.65 Stress",
+		cost: 0.75,
+		effect: () => 0.65
+	}),
+	13: new RebirthUpgradeState({
+		id: 2,
+		name: "13",
+		description: "???",
+		cost: 10000000,
+	}),
+	14: new RebirthUpgradeState({
+		id: 3,
+		name: "14",
+		description: "???",
+		cost: 10000000,
+	}),
+	21: new RebirthUpgradeState({
+		id: 4,
+		name: "21",
+		description: "'Dubious' now gives ×4.2 Solarity",
+		cost: 0.75,
+		effect: () => 4.2
+	}),
+	22: new RebirthUpgradeState({
+		id: 5,
+		name: "22",
+		description: "Increase work speed based on levels of 'slow and steady'",
+		cost: 3,
+		effect: () => 1.15 ** (SolUpgrades.slow.amount ** 0.85),
+		effectDisplay: formatX
+	}),
+	23: new RebirthUpgradeState({
+		id: 6,
+		name: "23",
+		description: "???",
+		cost: 10000000,
+	}),
+	24: new RebirthUpgradeState({
+		id: 7,
+		name: "24",
+		description: "???",
+		cost: 10000000,
+	}),
+	31: new RebirthUpgradeState({
+		id: 8,
+		name: "31",
+		description: "?",
+		cost: 1000000000000,
+	}),
+	32: new RebirthUpgradeState({
+		id: 9,
+		name: "32",
+		description: "???",
+		cost: 10000000,
+	}),
+	33: new RebirthUpgradeState({
+		id: 10,
+		name: "33",
+		description: "???",
+		cost: 10000000,
+	}),
+	34: new RebirthUpgradeState({
+		id: 11,
+		name: "34",
+		description: "???",
+		cost: 10000000,
+	}),
+};
+
+for (let i = 1; i < 5; i++) {
+	for (let j = 1; j < 5; j++) {
+		if (i === 1 && j === 1) continue;
+		const u = i * 10 + j;
+		if (RebirthUpgrades[u]) {
+			RebirthUpgrades[u].config.isUnlocked = function() {
+				return (RebirthUpgrades[u - 10]?.isBought ?? true) && (RebirthUpgrades[u - 1]?.isBought ?? true);
+			};
+		}
+	}
+}

@@ -101,7 +101,7 @@ export const Player = {
 			.toISOString().split("T")[0]} ${new Date().toLocaleTimeString(undefined, { hour12: false })}`;
 		player.options.exportCount++;
 		downloadAsFile(
-			`Antimatter Monomensions Save #${player.options.exportCount} (${dateString})`,
+			`IGJ2025_stress Save #${player.options.exportCount} (${dateString})`,
 			window.btoa(JSON.stringify(toRaw(player)))
 		);
 	},

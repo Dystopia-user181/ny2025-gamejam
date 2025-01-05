@@ -6,7 +6,7 @@ import { format } from "@/utils";
 
 import { player } from "@/js/player";
 import { RebirthHandler } from "@/js/rebirth";
-import { SolUpgrades } from "@/js/work/solupgrades";
+import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 import { StressMilestones } from "@/js/work/stress";
 import { WorkHandler } from "@/js/work";
 import { WorkState } from "@/js/player-type";
@@ -22,11 +22,11 @@ import { WorkState } from "@/js/player-type";
 						'c-work-btn--active': player.work.workState === WorkState.work,
 					}"
 					:style="{
-						background: `linear-gradient(
+						background: WorkHandler.efficiency > 10 ? 'rgba(30, 160, 30, 0.7)' : `linear-gradient(
 							to right,
 							rgba(30, 160, 30, 0.6),
 							rgba(30, 160, 30, 0.6) ${player.work.progress * 130 - 30}%,
-							rgba(255, 255, 255, 0.2) ${player.work.progress * 130}%
+							#6669 ${player.work.progress * 130}%
 						)`
 					}"
 					@click="WorkHandler.startWorking()"
@@ -35,6 +35,9 @@ import { WorkState } from "@/js/player-type";
 				</button>
 				<span v-if="player.work.maxSolarity > 2 || player.rebirth.maxLunarity">
 					>>> Solarity: {{ format(player.work.solarity, 3, 2) }}
+					<span v-if="RebirthUpgrades[11].isBought">
+						(+ {{ format(WorkHandler.efficiency * WorkHandler.solIncrement, 3, 2) }}/s)
+					</span>
 					<span v-if="player.rebirth.maxLunarity">
 						(Highest: {{ format(player.work.maxSolarity, 3, 2) }})
 					</span>
@@ -45,11 +48,13 @@ import { WorkState } from "@/js/player-type";
 				v-if="player.work.maxSolarity >= 24 || player.rebirth.maxLunarity"
 				class="c-sol-upg-grid"
 			>
-				<SolUpgrade
-					v-for="(_, upg) in SolUpgrades"
-					:key="'solupg' + _.config.id"
-					:upg-name="upg"
-				/>
+				<SolUpgrade upg-name="solarReturns" />
+				<SolUpgrade upg-name="slow" />
+				<SolUpgrade upg-name="tmpBoost" />
+				<SolUpgrade upg-name="dubious" />
+				<span />
+				<SolUpgrade upg-name="efficiency1" />
+				<SolUpgrade upg-name="efficiency2" />
 			</div>
 		</div>
 		<div
@@ -58,11 +63,14 @@ import { WorkState } from "@/js/player-type";
 		>
 			<div class="c-header">
 				Stress: {{ format(player.work.stress, 3, 2) }}
+				<span v-if="RebirthUpgrades[11].isBought">
+					(+ {{ format(WorkHandler.efficiency * WorkHandler.stressIncrement, 3, 2) }}/s)
+				</span>
 				<span v-if="StressMilestones.negativeE.canApply || player.rebirth.maxLunarity">
-					/ {{ format(WorkHandler.maxStress, 3, 2) }} >>>
+					/ {{ format(WorkHandler.maxStress, 3, 2) }}
 				</span>
 				<span v-if="StressMilestones.negativeE.canApply">
-					/ {{ format(StressMilestones.negativeE.effect) }} working speed
+					>>> / {{ format(StressMilestones.negativeE.effect) }} working speed
 				</span>
 				<span v-if="StressMilestones.negativeS.canApply">
 					& / {{ format(StressMilestones.negativeS.effect) }} Solarity
@@ -73,6 +81,15 @@ import { WorkState } from "@/js/player-type";
 				:key="'stressmstn' + _.config.id"
 				:upg-name="milestone"
 			/>
+			<br>
+			<div
+				v-if="player.work.maxSolarity >= 24 || player.rebirth.maxLunarity"
+				class="c-sol-upg-grid"
+			>
+				<span />
+				<SolUpgrade upg-name="unstress" />
+				<SolUpgrade upg-name="deathWish" />
+			</div>
 		</div>
 	</template>
 	<template v-else>
@@ -100,13 +117,13 @@ import { WorkState } from "@/js/player-type";
 }
 
 .c-section-work {
-	height: 60%;
+	height: 55%;
 	background-color: #222;
 	color: white;
 }
 
 .c-section-stress {
-	height: 40%;
+	height: 45%;
 	background-color: #999;
 	color: black;
 }
@@ -128,7 +145,8 @@ import { WorkState } from "@/js/player-type";
 }
 
 .c-sol-upg-grid {
-	max-width: 760px;
-	margin: -5px;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 10px;
 }
 </style>

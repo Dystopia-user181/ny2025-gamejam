@@ -1,13 +1,14 @@
 import { Effect, format, formatX } from "@/utils";
 
 import { player } from "@/js/player";
+import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 import { StressMilestones } from "./stress";
 import { WorkState } from "@/js/player-type";
 
 interface SolUpgradeConfig<E> {
 	id: number,
 	name: string,
-	description: string,
+	description: string | (() => string),
 	speed: number | (() => number),
 	cost: (x: number) => number,
 	effect?: (x: number) => E,
@@ -108,7 +109,7 @@ export const SolUpgrades = {
 		description: "+20% Solarity",
 		speed: 0.15,
 		effect: x => 1 + x * 0.2,
-		effectDisplay: x => `${formatX(x)} sol`,
+		effectDisplay: formatX,
 		cost: x => 30 + 5 * x + x * x * x + 1.5 ** x / 500,
 		isUnlocked: () => player.rebirth.maxLunarity > 0 || player.work.upgrades.amount[0] > 1
 	}),
@@ -118,17 +119,20 @@ export const SolUpgrades = {
 		description: "Double work speed for 20s",
 		speed: 0.2,
 		effect: x => (x > 0 ? 2 : 1),
-		effectDisplay: x => `${formatX(x)} work speed`,
+		effectDisplay: formatX,
 		cost: x => 150 + 1e300 * x,
 		isUnlocked: () => player.rebirth.maxLunarity > 0 || player.work.upgrades.amount[1] > 1,
 		isBuyable: () => player.work.upgrades.amount[2] <= 0,
 	}),
-	dubious: new SolUpgradeState({
+	dubious: new SolUpgradeState<[number, number]>({
 		id: 3,
 		name: "Dubious",
-		description: "×3 Solarity, ×10 Stress",
+		get description() {
+			if (RebirthUpgrades[21].isBought) return "×4.2 Solarity, ×10 Stress";
+			return "×3 Solarity, ×10 Stress";
+		},
 		speed: 0.05,
-		effect: x => [3 ** x, 10 ** x],
+		effect: x => [RebirthUpgrades[21].effectOrDefault(3) ** x, 10 ** x],
 		effectDisplay: x => `${formatX(x[0])} sol, ${formatX(x[1])} stress`,
 		isUnlocked: () => player.rebirth.maxLunarity > 0 || player.work.upgrades.amount[1] > 1,
 		cost: x => 1e3 * 8 ** (x ** 1.05),
@@ -139,7 +143,7 @@ export const SolUpgrades = {
 		description: "+30% work speed",
 		speed: 0.2,
 		effect: x => 1 + 0.3 * x,
-		effectDisplay: x => `${formatX(x)} speed`,
+		effectDisplay: formatX,
 		cost: x => 600 + 48 * x + x * x * x * 2 + 1.5 ** x / 100,
 		isUnlocked: () => player.rebirth.maxLunarity > 0 || StressMilestones.negativeE.canApply,
 	}),
@@ -149,18 +153,21 @@ export const SolUpgrades = {
 		description: "+30% upgrading speed to 1-4",
 		speed: 0.1,
 		effect: x => 1 + 0.3 * x,
-		effectDisplay: x => `${formatX(x)} speed`,
+		effectDisplay: formatX,
 		cost: x => 1e4 + 230 * x + x * x * x * 20 + 1.5 ** x / 50,
 		isUnlocked: () => player.rebirth.maxLunarity > 0 || StressMilestones.negativeE.canApply,
 	}),
 	unstress: new SolUpgradeState({
 		id: 6,
-		name: "Unstress",
-		description: "×0.7 Stress gain",
+		name: "Destress",
+		get description() {
+			if (RebirthUpgrades[12].isBought) return "×0.65 Stress gain";
+			return "×0.75 Stress gain";
+		},
 		speed: 0.1,
-		effect: x => 0.7 ** x,
-		effectDisplay: x => `/ ${format(1 / x)} Stress`,
-		cost: x => 600 + 39 * x + x * x * x + 1.5 ** x / 200,
+		effect: x => RebirthUpgrades[12].effectOrDefault(0.75) ** x,
+		effectDisplay: x => `/ ${format(1 / x)}`,
+		cost: x => 600 + 40 * x + x * x * x * 10 + 3 ** (x ** 1.05) / 4,
 		isUnlocked: () => player.rebirth.maxLunarity > 0,
 	}),
 	deathWish: new SolUpgradeState({
@@ -169,8 +176,8 @@ export const SolUpgrades = {
 		description: "×2 Stress gain",
 		speed: 0.1,
 		effect: x => 2 ** x,
-		effectDisplay: x => `${formatX(x)} Stress`,
-		cost: x => 600 + 39 * x + x * x * x + 1.5 ** x / 200,
+		effectDisplay: formatX,
+		cost: x => 600 + 40 * x + x * x * x * 10,
 		isUnlocked: () => player.rebirth.maxLunarity > 0,
 	}),
 };

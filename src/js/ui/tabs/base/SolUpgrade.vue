@@ -21,9 +21,9 @@ const upgrade = SolUpgrades[upgName];
 		:style="{
 			background: `linear-gradient(
 				to right,
-				rgba(30, 160, 30, 0.6),
-				rgba(30, 160, 30, 0.6) ${upgrade.progress / upgrade.cost * 130 - 30}%,
-				rgba(255, 255, 255, 0.2) ${upgrade.progress / upgrade.cost * 130}%
+				#3c7ac799,
+				#3c7ac799 ${upgrade.progress / upgrade.cost * 130 - 30}%,
+				#6669 ${upgrade.progress / upgrade.cost * 130}%
 			)`
 		}"
 		@click="upgrade.isSelected ? upgrade.deselect() : upgrade.select()"
@@ -35,7 +35,7 @@ const upgrade = SolUpgrades[upgName];
 		{{ format(upgrade.progress, 3, 2) }} / {{ format(upgrade.cost, 3, 2) }} Solarity
 		<template v-if="upgrade.effectDisplay">
 			<br>
-			{{ upgrade.effectDisplay }}
+			Currently: {{ upgrade.effectDisplay }}
 		</template>
 	</button>
 </template>
@@ -43,14 +43,15 @@ const upgrade = SolUpgrades[upgName];
 <style scoped>
 .c-sol-upg {
 	width: 180px;
-	height: 100px;
-	padding: 0;
-	margin: 5px;
+	height: 110px;
+	padding: 7px;
 	border-width: 1px;
+	transition: background-color 0.2s, border 0.2s, box-shadow 0.2s, padding 0.2s;
 }
 
 .c-sol-upg--active {
 	border-width: 4px;
+	padding: 4px;
 }
 
 .c-sol-upg--unbuyable {

@@ -47,7 +47,7 @@ export const StressMilestones = {
 		effectName: "Stress impacts working speed",
 		description: "A little too much pressure gets you un-going",
 		effect: () => Math.sqrt(player.work.stress / 1e4),
-		isUnlocked: () => player.work.stress >= 1e4,
+		isUnlocked: () => player.rebirth.maxLunarity > 0 || player.work.stress >= 1e4,
 	}),
 	negativeS: new StressMilestone({
 		id: 3,
@@ -55,6 +55,6 @@ export const StressMilestones = {
 		effectName: "Stress impacts Solarity gain",
 		description: "A big too much pressure gets you very un-going",
 		effect: () => player.work.stress / 5e5,
-		isUnlocked: () => player.work.stress >= 1e4,
+		isUnlocked: () => player.rebirth.maxLunarity > 0 || player.work.stress >= 1e4,
 	}),
 };
