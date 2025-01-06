@@ -1,7 +1,7 @@
 export function format(
 	value : number,
-	places = 2,
-	placesUnder1000 = 3,
+	places = 3,
+	placesUnder1000 = 2,
 	small = true
 ) {
 	if (value === Infinity) return "Infinity";
@@ -17,11 +17,11 @@ export function format(
 	return `${Math.min(value / Math.pow(10, e), 10 - Math.pow(0.1, places)).toFixed(places)}e${e}`;
 }
 
-export function formatX(value : number, places = 2, placesUnder1000 = 3) {
+export function formatX(value : number, places = 3, placesUnder1000 = 2) {
 	return `×${format(value, places, placesUnder1000)}`;
 }
 
-export function formatPow(value : number, places = 2, placesUnder1000 = 3) {
+export function formatPow(value : number, places = 3, placesUnder1000 = 2) {
 	return `^${format(value, places, placesUnder1000)}`;
 }
 

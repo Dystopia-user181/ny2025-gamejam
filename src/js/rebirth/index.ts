@@ -1,9 +1,13 @@
 import { Player, player } from "@/js/player";
 
+import { LunaShardUpgrades } from "@/js/shards";
+
 export const RebirthHandler = {
 	get projectedLunarityGain() {
 		if (player.work.maxSolarity < 1e6) return 0;
-		return Math.sqrt(player.work.maxSolarity / 1e7);
+		let base = Math.sqrt(player.work.maxSolarity / 1e7);
+		base *= LunaShardUpgrades.lune.effect;
+		return base;
 	},
 	resetNoReward() {
 		player.work = Player.defaultStart().work;

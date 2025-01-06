@@ -1,4 +1,6 @@
 import { player } from "@/js/player";
+
+import { LunaShardUpgrades } from "@/js/shards";
 import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 import { SolUpgrades } from "./solupgrades";
 import { StressMilestones } from "./stress";
@@ -14,6 +16,7 @@ export const WorkHandler = {
 		base *= SolUpgrades.efficiency1.effect;
 		base *= RebirthUpgrades[11].effectOrDefault(1);
 		base *= RebirthUpgrades[22].effectOrDefault(1);
+		base *= LunaShardUpgrades.time.effect;
 		return base;
 	},
 	get solIncrement() {
@@ -24,6 +27,7 @@ export const WorkHandler = {
 		base /= StressMilestones.negativeS.effectOrDefault(1);
 		base *= RebirthUpgrades[31].effectOrDefault(1);
 		base *= RebirthUpgrades[13].effectOrDefault(1);
+		base *= LunaShardUpgrades.solarity.effect;
 		return base;
 	},
 	get stressIncrement() {

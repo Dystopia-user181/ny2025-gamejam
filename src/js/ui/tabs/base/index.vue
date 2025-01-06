@@ -47,12 +47,12 @@ import { WorkState } from "@/js/player-type";
 					</span>
 				</button>
 				<span v-if="player.work.maxSolarity > 2 || player.rebirth.maxLunarity">
-					>>> Solarity: {{ format(player.work.solarity, 3, 2) }}
+					>>> Solarity: {{ format(player.work.solarity) }}
 					<span v-if="RebirthUpgrades[11].isBought">
-						(+ {{ format(WorkHandler.efficiency * WorkHandler.solIncrement, 3, 2) }}/s)
+						(+ {{ format(WorkHandler.efficiency * WorkHandler.solIncrement) }}/s)
 					</span>
 					<span v-if="player.rebirth.maxLunarity">
-						(Highest: {{ format(player.work.maxSolarity, 3, 2) }})
+						(Highest: {{ format(player.work.maxSolarity) }})
 					</span>
 				</span>
 			</div>
@@ -81,15 +81,15 @@ import { WorkState } from "@/js/player-type";
 				Stress: +{{ format(WorkHandler.stressIncrement) }} / work
 			</div>
 			<div class="c-header">
-				Stress: {{ format(player.work.stress, 3, 2) }}
+				Stress: {{ format(player.work.stress) }}
 				<span v-if="RebirthUpgrades[11].isBought">
-					(+ {{ format(WorkHandler.efficiency * WorkHandler.stressIncrement, 3, 2) }}/s)
+					(+ {{ format(WorkHandler.efficiency * WorkHandler.stressIncrement) }}/s)
 				</span>
 				<span v-if="StressMilestones.negativeE.canApply || player.rebirth.maxLunarity">
-					/ {{ format(WorkHandler.maxStress, 3, 2) }}
+					/ {{ format(WorkHandler.maxStress) }}
 				</span>
 				<span v-if="StressMilestones.negativeE.canApply">
-					>>> / {{ format(StressMilestones.negativeE.effect) }} working speed
+					>>> / {{ format(StressMilestones.negativeE.effect) }} work speed
 				</span>
 				<span v-if="StressMilestones.negativeS.canApply">
 					& / {{ format(StressMilestones.negativeS.effect) }} Solarity
@@ -114,7 +114,7 @@ import { WorkState } from "@/js/player-type";
 	<template v-else>
 		<div class="c-section-prestige">
 			<h1>
-				Stress: {{ format(player.work.stress, 3, 2) }} / {{ format(WorkHandler.maxStress, 3, 2) }}
+				Stress: {{ format(player.work.stress) }} / {{ format(WorkHandler.maxStress) }}
 				<br><br>
 				You died due to excess stress
 			</h1>

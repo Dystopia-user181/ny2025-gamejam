@@ -60,7 +60,7 @@ export class SolUpgradeState<E = number> extends Effect<SolUpgradeConfig<E>, E> 
 	get isSelected() {
 		return player.work.workState === WorkState.upgrade && player.work.upgrades.investing === this.config.id;
 	}
-	
+
 	get isAuto() {
 		return player.shards.solUpgAuto[this.config.id] > 0;
 	}

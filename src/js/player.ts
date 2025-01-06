@@ -37,6 +37,7 @@ export const Player = {
 				sol: 0,
 				solUpgAuto: [0, 0, 0, 0, 0, 0, 0, 0],
 				luna: 0,
+				lunaUpg: [],
 			},
 			options: {
 				autosave: 1,

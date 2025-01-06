@@ -30,7 +30,7 @@ export const StressMilestones = {
 	x2Efficiency: new StressMilestone({
 		id: 0,
 		threshold: 12,
-		effectName: "Working speed ×2",
+		effectName: "Work speed ×2",
 		description: "Stress ain't all bad...",
 		effect: () => 2,
 	}),
@@ -44,7 +44,7 @@ export const StressMilestones = {
 	negativeE: new StressMilestone({
 		id: 2,
 		threshold: 1e4,
-		effectName: "Stress impacts working speed",
+		effectName: "Stress impacts work speed",
 		description: "A little too much pressure gets you un-going",
 		effect: () => Math.sqrt(player.work.stress / 1e4),
 		isUnlocked: () => player.rebirth.maxLunarity > 0 || player.work.stress >= 1e4,

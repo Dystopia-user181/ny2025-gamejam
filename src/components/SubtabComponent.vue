@@ -2,7 +2,7 @@
 const { subtabs } = defineProps<{
 	subtabs: {
 		name: string,
-		buttonClass: Record<string, boolean>
+		buttonClass?: Record<string, boolean>
 	}[]
 }>();
 
@@ -17,7 +17,7 @@ const emit = defineEmits(["changeTab"]);
 			v-for="(subtab, id) of subtabs"
 			:key="id"
 			class="c-tab-button c-button-unspecified"
-			:class="[{ 'c-tab-button--current': currentTab === id }, subtab.buttonClass]"
+			:class="[{ 'c-tab-button--current': currentTab === id }, subtab.buttonClass ?? '']"
 
 			@click="() => {
 				currentTab = id;
@@ -40,6 +40,8 @@ const emit = defineEmits(["changeTab"]);
 
 .c-tab-button {
 	margin: 3px;
+	position: relative;
+	z-index: 999;
 }
 
 .c-tab-button--current {

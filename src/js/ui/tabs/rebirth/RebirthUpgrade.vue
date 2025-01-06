@@ -26,7 +26,7 @@ const upgrade = RebirthUpgrades[upgName];
 		<br>
 		{{ upgrade.config.description }}
 		<br>
-		{{ format(upgrade.cost, 3, 2) }} Lunarity
+		{{ format(upgrade.cost) }} Lunarity
 		<template v-if="upgrade.effectDisplay">
 			<br>
 			Currently: {{ upgrade.effectDisplay }}

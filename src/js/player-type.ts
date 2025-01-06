@@ -30,6 +30,7 @@ export interface PlayerType {
 		sol: number,
 		solUpgAuto: number[],
 		luna: number,
+		lunaUpg: number[],
 	},
 	options: {
 		autosave: number,

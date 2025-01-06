@@ -41,7 +41,7 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 	11: new RebirthUpgradeState({
 		id: 0,
 		name: "11",
-		description: "×3 working speed, work is done automatically",
+		description: "×3 work speed, work is done automatically",
 		cost: 1,
 		effect: () => 3
 	}),

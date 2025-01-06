@@ -3,8 +3,8 @@ import { LogicEvent } from "@/js/database/events";
 import { Modals } from "@/js/ui/modals";
 import { UIEvent } from "@/js/ui/events";
 
-import { WorkHandler } from "@/js/work";
 import { SolShardHandler } from "@/js/shards";
+import { WorkHandler } from "@/js/work";
 
 let lastTick = Date.now();
 

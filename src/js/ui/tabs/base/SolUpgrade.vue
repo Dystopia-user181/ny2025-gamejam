@@ -33,7 +33,7 @@ const upgrade = SolUpgrades[upgName];
 		<br>
 		{{ upgrade.config.description }}
 		<br>
-		{{ format(upgrade.progress, 3, 2) }} / {{ format(upgrade.cost, 3, 2) }} Solarity
+		{{ format(upgrade.progress) }} / {{ format(upgrade.cost) }} Solarity
 		<template v-if="upgrade.effectDisplay">
 			<br>
 			Currently: {{ upgrade.effectDisplay }}
