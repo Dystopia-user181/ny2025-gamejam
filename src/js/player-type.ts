@@ -28,6 +28,7 @@ export interface PlayerType {
 	},
 	shards: {
 		sol: number,
+		solUpgAuto: number[],
 		luna: number,
 	},
 	options: {

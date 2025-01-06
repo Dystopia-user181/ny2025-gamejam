@@ -4,6 +4,7 @@ import { Modals } from "@/js/ui/modals";
 import { UIEvent } from "@/js/ui/events";
 
 import { WorkHandler } from "@/js/work";
+import { SolShardHandler } from "@/js/shards";
 
 let lastTick = Date.now();
 
@@ -17,6 +18,7 @@ export function gameLoop(_dt?: number) {
 	}
 	LogicEvent.dispatch("GAME_TICK_BEFORE");
 	WorkHandler.tick(dt);
+	SolShardHandler.tick();
 	GameUI.update();
 	LogicEvent.dispatch("GAME_TICK_AFTER");
 }

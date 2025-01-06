@@ -3,6 +3,7 @@ import { AllowedComponentProps, Component, ref, shallowRef, ShallowRef, VNodePro
 import HardResetModal from "./HardResetModal.vue";
 import InfoModal from "./InfoModal.vue";
 import MessageModal from "./MessageModal.vue";
+import RebirthResetModal from "./RebirthResetModal.vue";
 import SettingsModal from "./SettingsModal.vue";
 
 // https://stackoverflow.com/a/73784241/17814082
@@ -93,6 +94,7 @@ export const Modals = {
 	hardReset: new Modal(HardResetModal),
 	info: new Modal(InfoModal),
 	settings: new Modal(SettingsModal),
+	rebirthReset: new Modal(RebirthResetModal),
 
 	message: new (class extends Modal<typeof MessageModal> {
 		queue: string[];

@@ -17,9 +17,10 @@ const upgrade = SolUpgrades[upgName];
 			'c-button-unspecified c-sol-upg': true,
 			'c-sol-upg--active': upgrade.isSelected,
 			'c-sol-upg--unbuyable disabled': !upgrade.isBuyable,
+			'c-sol-upg--auto': upgrade.isAuto,
 		}"
 		:style="{
-			background: `linear-gradient(
+			background: upgrade.isAuto ? '' : `linear-gradient(
 				to right,
 				#325886,
 				#325886 ${upgrade.progress / upgrade.cost * 130 - 30}%,
@@ -56,6 +57,13 @@ const upgrade = SolUpgrades[upgName];
 
 .c-sol-upg--unbuyable {
 	cursor: default;
+}
+
+.c-sol-upg--auto {
+	cursor: default;
+	color: #f8eb7e;
+	border-color: #f8eb7e;
+	background-color: #584f1799;
 }
 
 b {

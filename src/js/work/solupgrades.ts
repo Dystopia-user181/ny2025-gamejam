@@ -60,19 +60,34 @@ export class SolUpgradeState<E = number> extends Effect<SolUpgradeConfig<E>, E> 
 	get isSelected() {
 		return player.work.workState === WorkState.upgrade && player.work.upgrades.investing === this.config.id;
 	}
+	
+	get isAuto() {
+		return player.shards.solUpgAuto[this.config.id] > 0;
+	}
 
 	select() {
-		if (!this.isBuyable) return;
+		if (this.isAuto || !this.isBuyable) return;
 		player.work.workState = WorkState.upgrade;
 		player.work.upgrades.investing = this.config.id;
 	}
 
 	deselect() {
+		if (this.isAuto) return;
 		player.work.workState = WorkState.none;
 		player.work.upgrades.investing = -1;
 	}
 
 	tick(dt: number) {
+		if (this.isAuto) {
+			if (this.isSelected) {
+				player.work.workState = WorkState.none;
+				player.work.upgrades.investing = -1;
+			}
+			while (player.work.solarity >= this.cost) {
+				this.amount++;
+			}
+			return;
+		}
 		if (!this.isSelected || !this.isBuyable) return;
 		const ds = Math.min(
 			(this.cost - this.progress) * (1 + 1e-14),

@@ -35,6 +35,7 @@ export const Player = {
 			},
 			shards: {
 				sol: 0,
+				solUpgAuto: [0, 0, 0, 0, 0, 0, 0, 0],
 				luna: 0,
 			},
 			options: {
