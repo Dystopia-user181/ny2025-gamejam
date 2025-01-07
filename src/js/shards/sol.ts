@@ -8,7 +8,7 @@ export const SolShardHandler = {
 		return 1e3;
 	},
 	get solThreshold() {
-		return 2e4 * 30 ** (player.shards.sol + this.totalInvested);
+		return 2e4 * 25 ** (player.shards.sol + this.totalInvested);
 	},
 	tick() {
 		if (!RebirthUpgrades[23].isBought || player.work.stress >= this.stressThreshold) return;

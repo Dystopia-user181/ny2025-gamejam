@@ -109,8 +109,8 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 	33: new RebirthUpgradeState({
 		id: 10,
 		name: "33",
-		description: "???",
-		cost: 10000000,
+		description: "Unlock Recombinant shards",
+		cost: 2000,
 	}),
 	34: new RebirthUpgradeState({
 		id: 11,

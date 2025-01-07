@@ -14,6 +14,7 @@ export function gameLoop(_dt?: number) {
 		dt = _dt;
 	} else {
 		dt = (Date.now() - lastTick) / 1000;
+		dt = Math.min(dt, 20);
 		lastTick = Date.now();
 	}
 	LogicEvent.dispatch("GAME_TICK_BEFORE");

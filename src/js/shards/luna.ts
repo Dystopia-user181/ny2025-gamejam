@@ -52,20 +52,20 @@ export class LunaShardUpgradeState<E = number> extends RebuyableState<LunaShardU
 export const LunaShardUpgrades = {
 	solarity: new LunaShardUpgradeState({
 		id: 0,
-		description: x => `${formatX(1.3 ** ((x + 1) ** 0.9 - x ** 0.9))} Solarity`,
-		effect: x => 1.3 ** (x ** 0.9),
+		description: x => `${formatX(1.8 ** ((x + 1) ** 0.9 - x ** 0.9))} Solarity`,
+		effect: x => 1.8 ** (x ** 0.9),
 		effectDisplay: formatX,
 	}),
 	time: new LunaShardUpgradeState({
 		id: 1,
-		description: x => `${formatX(1.6 ** ((x + 1) ** 0.9 - x ** 0.9))} work speed`,
-		effect: x => 1.6 ** (x ** 0.9),
+		description: x => `${formatX(2 ** ((x + 1) ** 0.9 - x ** 0.9))} work speed`,
+		effect: x => 2 ** (x ** 0.9),
 		effectDisplay: formatX,
 	}),
 	lune: new LunaShardUpgradeState({
 		id: 2,
-		description: x => `${formatX(1.2 ** ((x + 1) ** 0.9 - x ** 0.9))} Lunarity`,
-		effect: x => 1.2 ** (x ** 0.9),
+		description: x => `${formatX(1.5 ** ((x + 1) ** 0.9 - x ** 0.9))} Lunarity`,
+		effect: x => 1.5 ** (x ** 0.9),
 		effectDisplay: formatX,
 	}),
 };

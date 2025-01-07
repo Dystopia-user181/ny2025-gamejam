@@ -59,7 +59,10 @@ export const WorkHandler = {
 			player.work.progress += dt * this.efficiency;
 			if (player.work.progress >= 1) {
 				if (RebirthUpgrades[11].isBought) {
-					const w = Math.floor(player.work.progress);
+					const w = Math.floor(Math.min(
+						player.work.progress,
+						(this.maxStress - player.work.stress) / this.stressIncrement + 1
+					));
 					player.work.solarity += w * this.solIncrement;
 					player.work.stress += w * this.stressIncrement;
 					player.work.progress -= w;
