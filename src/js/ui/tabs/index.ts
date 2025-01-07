@@ -4,8 +4,9 @@ import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 import BaseTab from "./base/index.vue";
 import RebirthTab from "./rebirth/index.vue";
 import ShardsTab from "./shards/index.vue";
+import SocietyTab from "./society/index.vue";
 
-export const TabTypes = ["base", "rebirth", "shards"] as const;
+export const TabTypes = ["base", "rebirth", "shards", "society"] as const;
 export type TabType = typeof TabTypes[number];
 
 interface TabStateConfig {
@@ -56,6 +57,12 @@ export const Tabs = {
 		name: "Shards",
 		component: ShardsTab,
 		isUnlocked: () => RebirthUpgrades[23].isBought || RebirthUpgrades[32].isBought
+	}),
+	"society": new TabState({
+		id: "society",
+		name: "Society",
+		component: SocietyTab,
+		isUnlocked: () => RebirthUpgrades[33].isBought
 	}),
 } as Record<TabType, TabState>;
 

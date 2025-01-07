@@ -6,7 +6,7 @@ import { RebirthHandler } from "@/js/rebirth";
 import { Modals } from ".";
 
 const { afterReset, actionText } = defineProps<{
-	afterReset: () => void,
+	afterReset:() => void,
 	actionText: string,
 }>();
 </script>
