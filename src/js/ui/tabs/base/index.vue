@@ -4,9 +4,11 @@ import StressMilestone from "./StressMilestone.vue";
 
 import { format } from "@/utils";
 
+import { LearnHandler } from "@/js/work/education";
 import { player } from "@/js/player";
 import { RebirthHandler } from "@/js/rebirth";
 import { RebirthUpgrades } from "@/js/rebirth/upgrades";
+import { SolUpgrades } from "@/js/work/solupgrades";
 import { StressMilestones } from "@/js/work/stress";
 import { WorkHandler } from "@/js/work";
 import { WorkState } from "@/js/player-type";
@@ -14,7 +16,7 @@ import { WorkState } from "@/js/player-type";
 
 <template>
 	<template v-if="player.work.stress < WorkHandler.maxStress">
-		<div class="c-section-work">
+		<div class="c-section-work--container">
 			<div
 				v-if="player.work.maxSolarity > 2 || player.rebirth.maxLunarity"
 				class="c-stat"
@@ -23,91 +25,129 @@ import { WorkState } from "@/js/player-type";
 				<br>
 				Work speed: {{ format(WorkHandler.efficiency) }} / s
 			</div>
-			<div class="c-header">
-				<button
-					:class="{
-						'c-button-unspecified c-work-btn': true,
-						'c-work-btn--active': player.work.workState === WorkState.work,
-					}"
-					:style="{
-						background: WorkHandler.efficiency > 10 && player.work.autoWork
-							? 'rgba(30, 160, 30, 0.7)'
-							: `linear-gradient(
-							to right,
-							rgba(30, 160, 30, 0.6),
-							rgba(30, 160, 30, 0.6) ${player.work.progress * 130 - 30}%,
-							#6669 ${player.work.progress * 130}%
-						)`
-					}"
-					@click="WorkHandler.startWorking()"
+			<div class="c-section-work">
+				<div class="c-header">
+					<button
+						:class="{
+							'c-button-unspecified c-work-btn': true,
+							'c-work-btn--active': player.work.workState === WorkState.work,
+						}"
+						:style="{
+							background: WorkHandler.efficiency > 10 && player.work.autoWork
+								? 'rgba(30, 160, 30, 0.7)'
+								: `linear-gradient(
+								to right,
+								rgba(30, 160, 30, 0.6),
+								rgba(30, 160, 30, 0.6) ${player.work.progress * 130 - 30}%,
+								#6669 ${player.work.progress * 130}%
+							)`
+						}"
+						@click="WorkHandler.startWorking()"
+					>
+						Work
+						<span v-if="RebirthUpgrades[11].isBought">
+							{{ player.work.autoWork ? "ON" : "OFF" }}
+						</span>
+					</button>
+					<span v-if="player.work.maxSolarity > 2 || player.rebirth.maxLunarity">
+						>>> Solarity: {{ format(player.work.solarity) }}
+						<span v-if="RebirthUpgrades[11].isBought">
+							(+ {{ format(WorkHandler.efficiency * WorkHandler.solIncrement) }}/s)
+						</span>
+						<span v-if="player.rebirth.maxLunarity">
+							(Highest: {{ format(player.work.maxSolarity) }})
+						</span>
+					</span>
+				</div>
+				<br>
+				<div
+					v-if="player.work.maxSolarity >= 24 || player.rebirth.maxLunarity"
+					class="c-sol-upg-grid"
 				>
-					Work
-					<span v-if="RebirthUpgrades[11].isBought">
-						{{ player.work.autoWork ? "ON" : "OFF" }}
-					</span>
-				</button>
-				<span v-if="player.work.maxSolarity > 2 || player.rebirth.maxLunarity">
-					>>> Solarity: {{ format(player.work.solarity) }}
-					<span v-if="RebirthUpgrades[11].isBought">
-						(+ {{ format(WorkHandler.efficiency * WorkHandler.solIncrement) }}/s)
-					</span>
-					<span v-if="player.rebirth.maxLunarity">
-						(Highest: {{ format(player.work.maxSolarity) }})
-					</span>
-				</span>
+					<SolUpgrade upg-name="solarReturns" />
+					<SolUpgrade upg-name="slow" />
+					<SolUpgrade upg-name="tmpBoost" />
+					<span v-if="!SolUpgrades.efficiency1.isUnlocked" />
+					<SolUpgrade upg-name="dubious" />
+					<SolUpgrade upg-name="efficiency1" />
+					<SolUpgrade upg-name="efficiency2" />
+				</div>
 			</div>
-			<br>
 			<div
-				v-if="player.work.maxSolarity >= 24 || player.rebirth.maxLunarity"
-				class="c-sol-upg-grid"
+				v-if="LearnHandler.unlocked"
+				class="c-section-edu"
 			>
-				<SolUpgrade upg-name="solarReturns" />
-				<SolUpgrade upg-name="slow" />
-				<SolUpgrade upg-name="tmpBoost" />
-				<SolUpgrade upg-name="dubious" />
-				<span />
-				<SolUpgrade upg-name="efficiency1" />
-				<SolUpgrade upg-name="efficiency2" />
+				<div class="c-stat2">
+					Knowledge: +{{ format(LearnHandler.knowledgeIncrement) }} / learn
+					<br>
+					Learning Speed: {{ format(LearnHandler.efficiency) }} / s
+				</div>
+				<div class="c-header">
+					<button
+						:class="{
+							'c-button-unspecified c-work-btn': true,
+							'c-work-btn--active': player.work.workState === WorkState.learn,
+						}"
+						:style="{
+							background: `linear-gradient(
+								to right,
+								rgba(30, 160, 30, 0.6),
+								rgba(30, 160, 30, 0.6) ${player.work.learnProgress * 130 - 30}%,
+								#6669 ${player.work.learnProgress * 130}%
+							)`
+						}"
+						@click="LearnHandler.startLearning()"
+					>
+						Learn
+					</button>
+					<span>
+						>>> Knowledge: {{ format(player.work.knowledge) }}
+					</span>
+				</div>
+				<br>
+				Knowledge is gone when you die... But perhaps you can keep knowledge through death with the "Society"
+				tab.
 			</div>
 		</div>
 		<div
 			v-if="player.work.maxSolarity >= 10 || player.rebirth.maxLunarity"
-			class="c-section-stress"
+			class="c-section-stress--container"
 		>
-			<div
-				v-if="player.work.maxSolarity > 2 || player.rebirth.maxLunarity"
-				class="c-stat"
-			>
+			<div class="c-stat">
 				Stress: +{{ format(WorkHandler.stressIncrement) }} / work
-			</div>
-			<div class="c-header">
-				Stress: {{ format(player.work.stress) }}
-				<span v-if="RebirthUpgrades[11].isBought">
-					(+ {{ format(WorkHandler.efficiency * WorkHandler.stressIncrement) }}/s)
-				</span>
-				<span v-if="StressMilestones.negativeE.canApply || player.rebirth.maxLunarity">
-					/ {{ format(WorkHandler.maxStress) }}
-				</span>
-				<span v-if="StressMilestones.negativeE.canApply">
-					>>> / {{ format(StressMilestones.negativeE.effect) }} work speed
-				</span>
-				<span v-if="StressMilestones.negativeS.canApply">
-					& / {{ format(StressMilestones.negativeS.effect) }} Solarity
+				<span v-if="LearnHandler.unlocked">
+					+{{ format(LearnHandler.stressIncrement) }} / learn
 				</span>
 			</div>
-			<StressMilestone
-				v-for="(_, milestone) in StressMilestones"
-				:key="'stressmstn' + _.config.id"
-				:upg-name="milestone"
-			/>
-			<br>
-			<div
-				v-if="player.work.maxSolarity >= 24 || player.rebirth.maxLunarity"
-				class="c-sol-upg-grid"
-			>
-				<span />
-				<SolUpgrade upg-name="unstress" />
-				<SolUpgrade upg-name="deathWish" />
+			<div class="c-section-stress">
+				<div class="c-header">
+					Stress: {{ format(player.work.stress) }}
+					<span v-if="RebirthUpgrades[11].isBought">
+						(+ {{ format(WorkHandler.efficiency * WorkHandler.stressIncrement) }}/s)
+					</span>
+					<span v-if="StressMilestones.negativeE.canApply || player.rebirth.maxLunarity">
+						/ {{ format(WorkHandler.maxStress) }}
+					</span>
+					<span v-if="StressMilestones.negativeE.canApply">
+						>>> / {{ format(StressMilestones.negativeE.effect) }} work speed
+					</span>
+					<span v-if="StressMilestones.negativeS.canApply">
+						& / {{ format(StressMilestones.negativeS.effect) }} Solarity
+					</span>
+				</div>
+				<StressMilestone
+					v-for="(_, milestone) in StressMilestones"
+					:key="'stressmstn' + _.config.id"
+					:upg-name="milestone"
+				/>
+				<br>
+				<div
+					v-if="player.work.maxSolarity >= 24 || player.rebirth.maxLunarity"
+					class="c-sol-upg-grid2"
+				>
+					<SolUpgrade upg-name="unstress" />
+					<SolUpgrade upg-name="deathWish" />
+				</div>
 			</div>
 		</div>
 	</template>
@@ -129,23 +169,34 @@ import { WorkState } from "@/js/player-type";
 </template>
 
 <style scoped>
-.c-section-work, .c-section-stress {
-	padding: 10px;
+.c-section-work--container, .c-section-stress--container {
+	border: 5px solid #5557;
 	font-size: 12px;
+	position: relative;
+	display: flex;
+}
+
+.c-section-work, .c-section-stress, .c-section-edu {
+	height: 100%;
+	padding: 7px 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	overflow: auto;
-	position: relative;
+	flex-grow: 1;
 }
 
-.c-section-work {
+.c-section-edu {
+	width: 40%;
+}
+
+.c-section-work--container {
 	height: 55%;
 	background-color: #222;
 	color: white;
 }
 
-.c-section-stress {
+.c-section-stress--container {
 	height: 45%;
 	background-color: #999;
 	color: black;
@@ -157,8 +208,15 @@ import { WorkState } from "@/js/player-type";
 
 .c-stat {
 	position: absolute;
-	bottom: 10px;
-	left: 10px;
+	bottom: 7px;
+	left: 7px;
+	line-height: 1.2;
+}
+
+.c-stat2 {
+	position: absolute;
+	bottom: 7px;
+	right: 7px;
 	line-height: 1.2;
 }
 
@@ -176,7 +234,13 @@ import { WorkState } from "@/js/player-type";
 
 .c-sol-upg-grid {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 10px;
+}
+
+.c-sol-upg-grid2 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 	gap: 10px;
 }
 

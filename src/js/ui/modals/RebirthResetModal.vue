@@ -24,6 +24,6 @@ const { afterReset, actionText } = defineProps<{
 		</template>
 		Are you sure you want to {{ actionText }}?
 		<br>
-		Doing so will reset your work progress and give no Lunarity.
+		Doing so will restart your current life and give no Lunarity.
 	</modal-wrapper-confirm>
 </template>

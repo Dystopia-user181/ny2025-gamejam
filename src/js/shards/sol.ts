@@ -36,4 +36,7 @@ export const SolShardHandler = {
 		for (const k of player.shards.solUpgAuto) u += k;
 		return u;
 	},
+	get total() {
+		return this.totalInvested + player.shards.sol;
+	},
 };

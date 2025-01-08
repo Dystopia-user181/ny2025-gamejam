@@ -39,7 +39,9 @@ export const WorkHandler = {
 		return base;
 	},
 	get maxStress() {
-		return 1e6;
+		let base = 1e6;
+		if (player.society.unlocked) base *= 100;
+		return base;
 	},
 	startWorking() {
 		if (RebirthUpgrades[11].isBought) {

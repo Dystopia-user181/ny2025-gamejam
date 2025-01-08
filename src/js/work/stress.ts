@@ -57,4 +57,11 @@ export const StressMilestones = {
 		effect: () => player.work.stress / 5e5,
 		isUnlocked: () => player.rebirth.maxLunarity > 0 || player.work.stress >= 1e4,
 	}),
+	learn: new StressMilestone({
+		id: 4,
+		threshold: 1e6,
+		effectName: "Start learning",
+		description: "That's where the real stress begins!",
+		isUnlocked: () => player.society.unlocked,
+	})
 };

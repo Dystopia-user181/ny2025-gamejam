@@ -3,6 +3,7 @@ import { LogicEvent } from "@/js/database/events";
 import { Modals } from "@/js/ui/modals";
 import { UIEvent } from "@/js/ui/events";
 
+import { LearnHandler } from "@/js/work/education";
 import { SolShardHandler } from "@/js/shards";
 import { WorkHandler } from "@/js/work";
 
@@ -19,6 +20,7 @@ export function gameLoop(_dt?: number) {
 	}
 	LogicEvent.dispatch("GAME_TICK_BEFORE");
 	WorkHandler.tick(dt);
+	LearnHandler.tick(dt);
 	SolShardHandler.tick();
 	GameUI.update();
 	LogicEvent.dispatch("GAME_TICK_AFTER");

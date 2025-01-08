@@ -4,6 +4,7 @@ export enum WorkState {
 	none,
 	work,
 	upgrade,
+	learn,
 }
 
 export interface PlayerType {
@@ -20,6 +21,8 @@ export interface PlayerType {
 			progress: number[],
 			amount: number[],
 		},
+		learnProgress: number,
+		knowledge: number,
 	},
 	rebirth: {
 		lunarity: number,
@@ -31,6 +34,12 @@ export interface PlayerType {
 		solUpgAuto: number[],
 		luna: number,
 		lunaUpg: number[],
+	},
+	society: {
+		unlocked: boolean,
+		unlockedKnowledge: boolean,
+		isSols: boolean,
+		eduUpgrades: number,
 	},
 	options: {
 		autosave: number,

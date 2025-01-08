@@ -27,6 +27,8 @@ export const Player = {
 					progress: [],
 					amount: [],
 				},
+				learnProgress: 0,
+				knowledge: 0,
 			},
 			rebirth: {
 				lunarity: 0,
@@ -38,6 +40,12 @@ export const Player = {
 				solUpgAuto: [0, 0, 0, 0, 0, 0, 0, 0],
 				luna: 0,
 				lunaUpg: [],
+			},
+			society: {
+				unlocked: false,
+				unlockedKnowledge: false,
+				isSols: false,
+				eduUpgrades: 0,
 			},
 			options: {
 				autosave: 1,

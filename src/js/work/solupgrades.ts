@@ -166,7 +166,7 @@ export const SolUpgrades = {
 	efficiency2: new SolUpgradeState({
 		id: 5,
 		name: "Swift",
-		description: "+30% upgrading speed to 1-4",
+		description: "+30% upgrading speed to Solar Return - Dubious",
 		speed: 0.1,
 		effect: x => 1 + 0.3 * x,
 		effectDisplay: formatX,

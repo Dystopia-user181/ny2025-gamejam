@@ -95,4 +95,7 @@ export const LunaShardHandler = {
 	get totalInvested() {
 		return player.shards.lunaUpg.reduce((a, b) => a + b, 0);
 	},
+	get total() {
+		return this.totalInvested + player.shards.luna;
+	},
 };
