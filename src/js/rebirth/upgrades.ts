@@ -89,8 +89,9 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 	24: new RebirthUpgradeState({
 		id: 7,
 		name: "24",
-		description: "???",
-		cost: 1e300,
+		description: "×1.1 Knowledge",
+		cost: 2e7,
+		effect: () => 1.1,
 	}),
 	31: new RebirthUpgradeState({
 		id: 8,
@@ -127,8 +128,8 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 	42: new RebirthUpgradeState({
 		id: 13,
 		name: "42",
-		description: "???",
-		cost: 1e300,
+		description: "Continue learning after gaining Knowledge once",
+		cost: 2e7,
 	}),
 	43: new RebirthUpgradeState({
 		id: 14,

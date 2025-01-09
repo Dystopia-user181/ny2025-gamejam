@@ -72,7 +72,9 @@ export const LunaShardUpgrades = {
 
 export const LunaShardHandler = {
 	get lunarThreshold() {
-		return 10 * 4 ** (player.shards.luna + this.totalInvested);
+		let base = 10 * 4 ** this.total;
+		if (this.total >= 10) base *= 100;
+		return base;
 	},
 	get canAfford() {
 		return RebirthUpgrades[32].isBought && player.rebirth.lunarity >= this.lunarThreshold;

@@ -1,8 +1,8 @@
 import { player } from "@/js/player";
 
+import { SocietyHandler, SocietyUpgrades } from "@/js/society";
 import { LunaShardUpgrades } from "@/js/shards";
 import { RebirthUpgrades } from "@/js/rebirth/upgrades";
-import { SocietyUpgrades } from "@/js/society";
 import { SolUpgrades } from "./solupgrades";
 import { StressMilestones } from "./stress";
 import { WorkState } from "@/js/player-type";
@@ -38,6 +38,7 @@ export const WorkHandler = {
 		base *= SolUpgrades.dubious.effect[1];
 		base *= SolUpgrades.unstress.effect;
 		base *= SolUpgrades.deathWish.effect;
+		base *= SocietyHandler.stressEffect;
 		return base;
 	},
 	get maxStress() {

@@ -47,9 +47,13 @@ import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 				<i
 					v-for="i in upgrade.amount"
 					:key="'moonsymbol' + upgrade.config.description + i"
-					class="fa fa-moon"
+					:class="{
+						'fa fa-moon': true,
+						'fa-moon--small': upgrade.amount > 6
+					}"
 				/>
 				<button
+					v-if="upgrade.amount < 10"
 					:class="{
 						'c-add-button': true,
 						'c-button-good': upgrade.canAfford,
@@ -122,6 +126,10 @@ import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 
 .c-luna-upgrade .fa-moon {
 	font-size: 40px;
+}
+
+.c-luna-upgrade .fa-moon--small {
+	font-size: 30px;
 }
 
 .c-add-button {

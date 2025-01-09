@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import SocietyUpgrade from "./SocietyUpgrade.vue";
 
+import { formatPercents, formatX } from "@/utils";
+
 import { SocietyHandler, SocietyUpgrades } from "@/js/society";
 import { player } from "@/js/player";
 </script>
@@ -59,8 +61,18 @@ import { player } from "@/js/player";
 		<div class="c-comparison">
 			<i class="fa fa-moon" />
 			<i class="fa fa-sun" />
-			<span>Insert good thing</span>
-			<span>Insert bad thing</span>
+			<template v-if="SocietyHandler.unlockedDual">
+				<span>{{ formatPercents(1 - SocietyHandler.solsChance) }} chance to be born as a Lunesperson</span>
+				<span>{{ formatPercents(SocietyHandler.solsChance) }} chance to be born as a Solsperson</span>
+				<span>{{ formatX(SocietyHandler.stressDual[0]) }} Stress</span>
+				<span>{{ formatX(SocietyHandler.stressDual[1]) }} Stress</span>
+				<span>{{ formatX(SocietyHandler.eduDual[0]) }} Knowledge</span>
+				<span>{{ formatX(SocietyHandler.eduDual[1]) }} Knowledge</span>
+			</template>
+			<template v-else>
+				<span>???</span>
+				<span>???</span>
+			</template>
 		</div>
 	</div>
 </template>

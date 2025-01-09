@@ -96,7 +96,7 @@ import { WorkState } from "@/js/player-type";
 								#6669 ${player.work.learnProgress * 130}%
 							)`
 						}"
-						@click="LearnHandler.startLearning()"
+						@click="LearnHandler.toggleLearning()"
 					>
 						Learn
 					</button>

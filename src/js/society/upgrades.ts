@@ -22,7 +22,10 @@ export class SocietyUpgradeState<E = number> extends BitUpgradeState<SocietyUpgr
 	get canAfford() { return super.canAfford && player.work.stress < WorkHandler.maxStress; }
 
 	get currencyAmount() { return player.work.knowledge + 1e-14; }
-	set currencyAmount(x) { player.work.knowledge = Math.max(x, 0); }
+	set currencyAmount(x) {
+		player.work.knowledge = Math.max(x, 0);
+		if (player.work.knowledge < 1e-12) player.work.knowledge = 0;
+	}
 
 	get effect() {
 		if (!this.config.effect) throw `Effect not defined for Society Upgrade id ${this.config.id}`;
@@ -53,5 +56,11 @@ export const SocietyUpgrades = {
 		description: "×100 Solarity, ×7 Lunarity",
 		cost: 3,
 		effect: () => [100, 7]
+	}),
+	influence: new SocietyUpgradeState({
+		id: 2,
+		name: "Influence",
+		description: "Use Knowledge to influence the world",
+		cost: 30,
 	}),
 };

@@ -44,7 +44,18 @@
 		"@typescript-eslint/no-unsafe-return": "off",
 
 		"@typescript-eslint/ban-ts-comment": "off",
-		"@typescript-eslint/no-unused-vars": ["error"],
+		"@typescript-eslint/no-unused-vars": [
+			"error",
+			{
+				"args": "all",
+				"argsIgnorePattern": "^_",
+				"caughtErrors": "all",
+				"caughtErrorsIgnorePattern": "^_",
+				"destructuredArrayIgnorePattern": "^_",
+				"varsIgnorePattern": "^_",
+				"ignoreRestSiblings": true
+			}
+		],
 		"import/prefer-default-export": "off",
 		"import/no-unresolved": "off",
 		"import/named": "error",
@@ -192,7 +203,6 @@
 		"no-mixed-spaces-and-tabs": "error",
 		"no-multi-assign": "warn",
 		"no-multiple-empty-lines": "error",
-		"no-negated-condition": "error",
 		"no-nested-ternary": "error",
 		"no-new-object": "error",
 		"no-trailing-spaces": "warn",
