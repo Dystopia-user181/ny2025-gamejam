@@ -62,8 +62,8 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 	14: new RebirthUpgradeState({
 		id: 3,
 		name: "14",
-		description: "???",
-		cost: 1e30,
+		description: "Stress affects work speed less",
+		cost: 2e6,
 	}),
 	21: new RebirthUpgradeState({
 		id: 4,
@@ -90,7 +90,7 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 		id: 7,
 		name: "24",
 		description: "???",
-		cost: 10000000,
+		cost: 1e300,
 	}),
 	31: new RebirthUpgradeState({
 		id: 8,
@@ -116,31 +116,31 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 		id: 11,
 		name: "34",
 		description: "???",
-		cost: 10000000,
+		cost: 1e300,
 	}),
 	41: new RebirthUpgradeState({
 		id: 12,
 		name: "41",
-		description: "???",
-		cost: 10000000,
+		description: "Stress affects Solarity less",
+		cost: 2e6,
 	}),
 	42: new RebirthUpgradeState({
 		id: 13,
 		name: "42",
 		description: "???",
-		cost: 10000000,
+		cost: 1e300,
 	}),
 	43: new RebirthUpgradeState({
 		id: 14,
 		name: "43",
 		description: "???",
-		cost: 10000000,
+		cost: 1e300,
 	}),
 	44: new RebirthUpgradeState({
 		id: 15,
 		name: "44",
 		description: "???",
-		cost: 10000000,
+		cost: 1e300,
 	}),
 };
 

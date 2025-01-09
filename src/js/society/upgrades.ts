@@ -46,5 +46,12 @@ export const SocietyUpgrades = {
 		description: "×3 learning speed and /3 stress gain",
 		cost: 1,
 		effect: () => 3
-	})
+	}),
+	dual: new SocietyUpgradeState({
+		id: 1,
+		name: "Duals",
+		description: "×100 Solarity, ×7 Lunarity",
+		cost: 3,
+		effect: () => [100, 7]
+	}),
 };

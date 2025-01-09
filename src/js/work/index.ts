@@ -2,6 +2,7 @@ import { player } from "@/js/player";
 
 import { LunaShardUpgrades } from "@/js/shards";
 import { RebirthUpgrades } from "@/js/rebirth/upgrades";
+import { SocietyUpgrades } from "@/js/society";
 import { SolUpgrades } from "./solupgrades";
 import { StressMilestones } from "./stress";
 import { WorkState } from "@/js/player-type";
@@ -28,6 +29,7 @@ export const WorkHandler = {
 		base *= RebirthUpgrades[31].effectOrDefault(1);
 		base *= RebirthUpgrades[13].effectOrDefault(1);
 		base *= LunaShardUpgrades.solarity.effect;
+		base *= SocietyUpgrades.dual.effectOrDefault([1, 1])[0];
 		return base;
 	},
 	get stressIncrement() {

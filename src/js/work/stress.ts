@@ -1,5 +1,6 @@
 import { Effect } from "@/utils";
 
+import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 import { player } from "@/js/player";
 
 interface StressMilestoneConfig {
@@ -46,7 +47,10 @@ export const StressMilestones = {
 		threshold: 1e4,
 		effectName: "Stress impacts work speed",
 		description: "A little too much pressure gets you un-going",
-		effect: () => Math.sqrt(player.work.stress / 1e4),
+		effect: () => {
+			const exp = RebirthUpgrades[14].isBought ? 0.35 : 0.5;
+			return (player.work.stress / 1e4) ** exp;
+		},
 		isUnlocked: () => player.rebirth.maxLunarity > 0 || player.work.stress >= 1e4,
 	}),
 	negativeS: new StressMilestone({
@@ -54,7 +58,10 @@ export const StressMilestones = {
 		threshold: 5e5,
 		effectName: "Stress impacts Solarity gain",
 		description: "A big too much pressure gets you very un-going",
-		effect: () => player.work.stress / 5e5,
+		effect: () => {
+			const exp = RebirthUpgrades[14].isBought ? 0.8 : 1;
+			return (player.work.stress / 5e5) ** exp;
+		},
 		isUnlocked: () => player.rebirth.maxLunarity > 0 || player.work.stress >= 1e4,
 	}),
 	learn: new StressMilestone({

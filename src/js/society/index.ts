@@ -11,6 +11,9 @@ export const SocietyHandler = {
 		if (!this.meetRequirement) return;
 		player.society.unlocked = true;
 	},
+	get solsChance() {
+		return 1 / 3;
+	},
 	showChangesModal() {
 		Modals.message.showText(`	
 		<b>There are two classes of beings; Solspeople and Lunespeople.
@@ -19,7 +22,9 @@ export const SocietyHandler = {
 		<br><br>
 		You will be reborn either as a lunesperson or a solsperson.
 		<br>
-		Additionally, you can hold a hundred times more stress before dying.
+		Also, you can hold a hundred times more stress before dying.
+		<br>
+		In turn, you can go beyond creating solarity.
 		`);
 	}
 };

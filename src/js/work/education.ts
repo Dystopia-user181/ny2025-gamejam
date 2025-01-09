@@ -19,7 +19,7 @@ export const LearnHandler = {
 		return base;
 	},
 	get stressIncrement() {
-		let base = WorkHandler.stressIncrement * 8e9;
+		let base = WorkHandler.stressIncrement * 1.6e10;
 		base /= SocietyUpgrades.scrolls.effectOrDefault(1);
 		return base;
 	},
