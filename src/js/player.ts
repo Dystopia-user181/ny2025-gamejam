@@ -40,12 +40,16 @@ export const Player = {
 				solUpgAuto: [0, 0, 0, 0, 0, 0, 0, 0],
 				luna: 0,
 				lunaUpg: [],
+				respecSol: false,
+				respecLuna: false,
 			},
 			society: {
 				unlocked: false,
 				unlockedKnowledge: false,
 				isSols: false,
 				eduUpgrades: 0,
+				solCommune: 0,
+				lunaCommune: 0,
 			},
 			options: {
 				autosave: 1,

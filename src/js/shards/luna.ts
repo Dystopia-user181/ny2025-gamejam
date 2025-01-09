@@ -3,8 +3,6 @@ import { formatX, RebuyableState } from "@/utils";
 import { player } from "@/js/player";
 import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 
-import { Modals } from "@/js/ui/modals";
-
 interface LunaShardUpgradeConfig<E> {
 	id: number,
 	description: string | (() => string) | ((x: number) => string),
@@ -85,10 +83,7 @@ export const LunaShardHandler = {
 		player.shards.luna++;
 	},
 	requestRespec() {
-		Modals.rebirthReset.show({
-			afterReset: () => this.respec(),
-			actionText: "redistribute your luna shards",
-		});
+		player.shards.respecLuna = !player.shards.respecLuna;
 	},
 	respec() {
 		player.shards.luna += this.totalInvested;

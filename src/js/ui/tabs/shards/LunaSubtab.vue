@@ -25,11 +25,14 @@ import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 		</button>
 		<br>
 		<button
-			class="c-button-unspecified"
+			:class="{
+				'c-button-unspecified': !player.shards.respecLuna,
+				'c-button-good': player.shards.respecLuna
+			}"
 			:disabled="LunaShardHandler.totalInvested <= 0"
 			@click="LunaShardHandler.requestRespec()"
 		>
-			Respec <i class="fa fa-moon" />
+			Respec <i class="fa fa-moon" /> next life
 		</button>
 		<br>
 		<div class="c-luna-upgrades">

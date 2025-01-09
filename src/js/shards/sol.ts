@@ -1,8 +1,6 @@
 import { player } from "@/js/player";
 import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 
-import { Modals } from "@/js/ui/modals";
-
 export const SolShardHandler = {
 	get stressThreshold() {
 		return 1e3;
@@ -22,10 +20,7 @@ export const SolShardHandler = {
 		player.shards.solUpgAuto[id]++;
 	},
 	requestRespec() {
-		Modals.rebirthReset.show({
-			afterReset: () => this.respec(),
-			actionText: "redistribute your sol shards",
-		});
+		player.shards.respecSol = !player.shards.respecSol;
 	},
 	respec() {
 		player.shards.sol += this.totalInvested;

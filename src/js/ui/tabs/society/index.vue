@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import SocietyUpgrade from "./SocietyUpgrade.vue";
 
-import { formatPercents, formatX } from "@/utils";
+import { format, formatPercents, formatX } from "@/utils";
 
-import { SocietyHandler, SocietyUpgrades } from "@/js/society";
+import { CommuneHandler, SocietyHandler, SocietyUpgrades } from "@/js/society";
 import { player } from "@/js/player";
 </script>
 
@@ -68,6 +68,40 @@ import { player } from "@/js/player";
 				<span>{{ formatX(SocietyHandler.stressDual[1]) }} Stress</span>
 				<span>{{ formatX(SocietyHandler.eduDual[0]) }} Knowledge</span>
 				<span>{{ formatX(SocietyHandler.eduDual[1]) }} Knowledge</span>
+				<button
+					:class="{
+						'c-commune-button': true,
+						'c-button-good': CommuneHandler.lunaMaxed,
+						'c-button-unspecified': CommuneHandler.canAffordLunaCommune,
+						'disabled': !CommuneHandler.canAffordLunaCommune && !CommuneHandler.lunaMaxed
+					}"
+					@click="CommuneHandler.buyLunaCommune()"
+				>
+					<b>Build a luna commune for +30% work and learning speed to all lunespeople.</b>
+					<br>
+					It decays upon rebirth if not maintained.
+					<br>
+					Currently: {{ formatX(CommuneHandler.lunaCommuneEffect) }}
+					<br>
+					Cost: {{ format(CommuneHandler.lunaCommuneCost) }} Knowledge
+				</button>
+				<button
+					:class="{
+						'c-commune-button': true,
+						'c-button-good': CommuneHandler.solMaxed,
+						'c-button-unspecified': CommuneHandler.canAffordSolCommune,
+						'disabled': !CommuneHandler.canAffordSolCommune && !CommuneHandler.solMaxed
+					}"
+					@click="CommuneHandler.buySolCommune()"
+				>
+					<b>Build a sol commune for +30% work and learning speed to all solspeople.</b>
+					<br>
+					It decays upon rebirth if not maintained.
+					<br>
+					Currently: {{ formatX(CommuneHandler.solCommuneEffect) }}
+					<br>
+					Cost: {{ format(CommuneHandler.solCommuneCost) }} Knowledge
+				</button>
 			</template>
 			<template v-else>
 				<span>???</span>
@@ -108,5 +142,14 @@ import { player } from "@/js/player";
 
 .c-comparison .fa {
 	font-size: 30px;
+}
+
+.c-commune-button {
+	justify-self: center;
+	width: 290px;
+}
+
+.c-commune-button b {
+	font-size: 13px;
 }
 </style>

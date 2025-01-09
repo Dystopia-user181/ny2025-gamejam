@@ -24,11 +24,14 @@ import { SolUpgrades } from "@/js/work/solupgrades";
 			when you have enough solarity.
 		</span>
 		<button
-			class="c-button-unspecified"
+			:class="{
+				'c-button-unspecified': !player.shards.respecSol,
+				'c-button-good': player.shards.respecSol
+			}"
 			:disabled="SolShardHandler.totalInvested <= 0"
 			@click="SolShardHandler.requestRespec()"
 		>
-			Respec <i class="fa fa-sun" />
+			Respec <i class="fa fa-sun" /> next life
 		</button>
 		<br>
 		<div class="c-auto-grid">

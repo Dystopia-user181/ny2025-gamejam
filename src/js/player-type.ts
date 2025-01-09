@@ -34,12 +34,16 @@ export interface PlayerType {
 		solUpgAuto: number[],
 		luna: number,
 		lunaUpg: number[],
+		respecSol: boolean,
+		respecLuna: boolean,
 	},
 	society: {
 		unlocked: boolean,
 		unlockedKnowledge: boolean,
 		isSols: boolean,
 		eduUpgrades: number,
+		solCommune: number,
+		lunaCommune: number,
 	},
 	options: {
 		autosave: number,

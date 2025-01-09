@@ -1,6 +1,6 @@
 import { player } from "@/js/player";
 
-import { SocietyHandler, SocietyUpgrades } from "@/js/society";
+import { CommuneHandler, SocietyHandler, SocietyUpgrades } from "@/js/society";
 import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 import { StressMilestones } from "./stress";
 import { WorkHandler } from ".";
@@ -13,6 +13,7 @@ export const LearnHandler = {
 	get efficiency() {
 		let base = 0.4;
 		base *= SocietyUpgrades.scrolls.effectOrDefault(1);
+		base *= CommuneHandler.effect;
 		return base;
 	},
 	get knowledgeIncrement() {

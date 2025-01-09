@@ -1,6 +1,6 @@
 import { player } from "@/js/player";
 
-import { SocietyHandler, SocietyUpgrades } from "@/js/society";
+import { CommuneHandler, SocietyHandler, SocietyUpgrades } from "@/js/society";
 import { LunaShardUpgrades } from "@/js/shards";
 import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 import { SolUpgrades } from "./solupgrades";
@@ -18,6 +18,7 @@ export const WorkHandler = {
 		base *= RebirthUpgrades[11].effectOrDefault(1);
 		base *= RebirthUpgrades[22].effectOrDefault(1);
 		base *= LunaShardUpgrades.time.effect;
+		base *= CommuneHandler.effect;
 		return base;
 	},
 	get solIncrement() {

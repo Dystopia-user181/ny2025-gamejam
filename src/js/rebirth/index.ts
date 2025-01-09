@@ -1,7 +1,7 @@
 import { Player, player } from "@/js/player";
 
-import { SocietyHandler, SocietyUpgrades } from "@/js/society";
-import { LunaShardUpgrades } from "@/js/shards";
+import { CommuneHandler, SocietyHandler, SocietyUpgrades } from "@/js/society";
+import { LunaShardHandler, LunaShardUpgrades, SolShardHandler } from "@/js/shards";
 
 export const RebirthHandler = {
 	get projectedLunarityGain() {
@@ -21,6 +21,15 @@ export const RebirthHandler = {
 			player.rebirth.lunarity += this.projectedLunarityGain;
 		}
 		player.rebirth.maxLunarity = Math.max(player.rebirth.maxLunarity, player.rebirth.lunarity);
+		if (player.shards.respecLuna) {
+			LunaShardHandler.respec();
+			player.shards.respecLuna = false;
+		}
+		if (player.shards.respecSol) {
+			SolShardHandler.respec();
+			player.shards.respecSol = false;
+		}
+		CommuneHandler.decayCommune();
 		this.resetNoReward();
 		if (player.society.unlocked) player.society.isSols = Math.random() < SocietyHandler.solsChance;
 	},
