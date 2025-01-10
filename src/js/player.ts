@@ -50,6 +50,8 @@ export const Player = {
 				eduUpgrades: 0,
 				solCommune: 0,
 				lunaCommune: 0,
+				solSettlement: 0,
+				lunaSettlement: 0,
 			},
 			options: {
 				autosave: 1,

@@ -63,4 +63,10 @@ export const SocietyUpgrades = {
 		description: "Use Knowledge to influence the world",
 		cost: 30,
 	}),
+	politics: new SocietyUpgradeState({
+		id: 3,
+		name: "Politics",
+		description: "Influence the world in more nefarious ways",
+		cost: 100,
+	}),
 };

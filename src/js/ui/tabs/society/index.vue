@@ -3,7 +3,7 @@ import SocietyUpgrade from "./SocietyUpgrade.vue";
 
 import { format, formatPercents, formatX } from "@/utils";
 
-import { CommuneHandler, SocietyHandler, SocietyUpgrades } from "@/js/society";
+import { CommuneHandler, SettlementHandler, SocietyHandler, SocietyUpgrades } from "@/js/society";
 import { player } from "@/js/player";
 </script>
 
@@ -47,15 +47,6 @@ import { player } from "@/js/player";
 					:upg-name="upgName"
 				/>
 			</div>
-			<br>
-			You are a
-			<b v-if="player.society.isSols">
-				Solsperson <i class="fa fa-sun" />
-			</b>
-			<b v-else>
-				Lunesperson <i class="fa fa-moon" />
-			</b>
-			in this life
 		</div>
 		<br>
 		<div class="c-comparison">
@@ -77,7 +68,7 @@ import { player } from "@/js/player";
 					}"
 					@click="CommuneHandler.buyLunaCommune()"
 				>
-					<b>Build a luna commune for +30% work and learning speed to all lunespeople.</b>
+					<b>Form a luna commune for +30% work and learning speed to all lunespeople.</b>
 					<br>
 					It decays upon rebirth if not maintained.
 					<br>
@@ -94,13 +85,47 @@ import { player } from "@/js/player";
 					}"
 					@click="CommuneHandler.buySolCommune()"
 				>
-					<b>Build a sol commune for +30% work and learning speed to all solspeople.</b>
+					<b>Form a sol commune for +30% work and learning speed to all solspeople.</b>
 					<br>
 					It decays upon rebirth if not maintained.
 					<br>
 					Currently: {{ formatX(CommuneHandler.solCommuneEffect) }}
 					<br>
 					Cost: {{ format(CommuneHandler.solCommuneCost) }} Knowledge
+				</button>
+				<button
+					:class="{
+						'c-commune-button': true,
+						'c-button-good': SettlementHandler.lunaMaxed,
+						'c-button-unspecified': SettlementHandler.canAffordLuna,
+						'disabled': !SettlementHandler.canAffordLuna && !SettlementHandler.lunaMaxed
+					}"
+					@click="SettlementHandler.buyLuna()"
+				>
+					<b>Build a luna settlement ×1.2 Lunarity to all lunespeople.</b>
+					<br>
+					It decays upon rebirth if not maintained.
+					<br>
+					Currently: {{ formatX(SettlementHandler.lunaEffect) }}
+					<br>
+					Cost: {{ format(SettlementHandler.lunaCost) }} Knowledge
+				</button>
+				<button
+					:class="{
+						'c-commune-button': true,
+						'c-button-good': SettlementHandler.solMaxed,
+						'c-button-unspecified': SettlementHandler.canAffordSol,
+						'disabled': !SettlementHandler.canAffordSol && !SettlementHandler.solMaxed
+					}"
+					@click="SettlementHandler.buySol()"
+				>
+					<b>Build a sols settlement ×1.2 Lunarity to all solspeople.</b>
+					<br>
+					It decays upon rebirth if not maintained.
+					<br>
+					Currently: {{ formatX(SettlementHandler.solEffect) }}
+					<br>
+					Cost: {{ format(SettlementHandler.solCost) }} Knowledge
 				</button>
 			</template>
 			<template v-else>

@@ -96,4 +96,51 @@ export const CommuneHandler = {
 	}
 };
 
+export const SettlementHandler = {
+	get solCost() {
+		return (player.society.solSettlement + 2) * 5;
+	},
+	get solMaxed() {
+		return player.society.solSettlement >= 20;
+	},
+	get canAffordSol() {
+		return player.society.isSols && player.work.knowledge >= this.solCost && !this.solMaxed;
+	},
+	buySol() {
+		if (!this.canAffordSol) return;
+		player.work.knowledge -= this.solCost;
+		player.society.solSettlement++;
+	},
+	get solEffect() {
+		return 1.2 ** player.society.solSettlement;
+	},
+	get lunaCost() {
+		return (player.society.lunaSettlement + 2) * 5;
+	},
+	get lunaMaxed() {
+		return player.society.lunaSettlement >= 20;
+	},
+	get canAffordLuna() {
+		return !player.society.isSols && player.work.knowledge >= this.lunaCost && !this.lunaMaxed;
+	},
+	buyLuna() {
+		if (!this.canAffordLuna) return;
+		player.work.knowledge -= this.lunaCost;
+		player.society.lunaSettlement++;
+	},
+	get lunaEffect() {
+		return 1.2 ** player.society.lunaSettlement;
+	},
+	get effect() {
+		return player.society.isSols ? this.solEffect : this.lunaEffect;
+	},
+	decay() {
+		if (player.society.isSols) {
+			player.society.solSettlement = Math.max(player.society.solSettlement - 1, 0);
+		} else {
+			player.society.lunaSettlement = Math.max(player.society.lunaSettlement - 1, 0);
+		}
+	}
+};
+
 export * from "./upgrades";

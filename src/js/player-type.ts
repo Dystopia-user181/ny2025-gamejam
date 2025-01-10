@@ -44,6 +44,8 @@ export interface PlayerType {
 		eduUpgrades: number,
 		solCommune: number,
 		lunaCommune: number,
+		solSettlement: number,
+		lunaSettlement: number,
 	},
 	options: {
 		autosave: number,

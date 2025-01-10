@@ -1,6 +1,6 @@
 import { Player, player } from "@/js/player";
 
-import { CommuneHandler, SocietyHandler, SocietyUpgrades } from "@/js/society";
+import { CommuneHandler, SettlementHandler, SocietyHandler, SocietyUpgrades } from "@/js/society";
 import { LunaShardHandler, LunaShardUpgrades, SolShardHandler } from "@/js/shards";
 
 export const RebirthHandler = {
@@ -9,6 +9,7 @@ export const RebirthHandler = {
 		let base = Math.sqrt(player.work.maxSolarity / 1e7);
 		base *= LunaShardUpgrades.lune.effect;
 		base *= SocietyUpgrades.dual.effectOrDefault([1, 1])[1];
+		base *= SettlementHandler.effect;
 		return base;
 	},
 	resetNoReward() {
@@ -30,6 +31,7 @@ export const RebirthHandler = {
 			player.shards.respecSol = false;
 		}
 		CommuneHandler.decayCommune();
+		SettlementHandler.decay();
 		this.resetNoReward();
 		if (player.society.unlocked) player.society.isSols = Math.random() < SocietyHandler.solsChance;
 	},

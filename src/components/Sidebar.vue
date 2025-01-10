@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Modals } from "@/js/ui/modals";
 import { Tabs } from "@/js/ui/tabs";
+
+import { player } from "@/js/player";
 </script>
 
 <template>
@@ -15,6 +17,19 @@ import { Tabs } from "@/js/ui/tabs";
 				@click="Modals.info.show()"
 			/>
 		</h2>
+		<span
+			v-if="player.society.unlocked"
+			class="c-sidebar__header2"
+		>
+			You are a
+			<b v-if="player.society.isSols">
+				Solsperson <i class="fa fa-sun" />
+			</b>
+			<b v-else>
+				Lunesperson <i class="fa fa-moon" />
+			</b>
+			in this life
+		</span>
 		<button
 			v-for="tab in Tabs"
 			:key="'tab-' + tab.id"
@@ -36,7 +51,7 @@ import { Tabs } from "@/js/ui/tabs";
 
 <style scoped>
 .c-sidebar {
-	width: 140px;
+	width: 160px;
 	max-height: 100vh;
 	display: flex;
 	flex-direction: column;
@@ -67,6 +82,10 @@ import { Tabs } from "@/js/ui/tabs";
 
 .c-sidebar__header .fa-gear:hover {
 	transform: rotate(120deg);
+}
+
+.c-sidebar__header2 {
+	border-bottom: 1px solid white;
 }
 
 .c-sidebar__tab-button {
