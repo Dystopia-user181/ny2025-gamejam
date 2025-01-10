@@ -5,6 +5,13 @@ export enum WorkState {
 	work,
 	upgrade,
 	learn,
+	campaign,
+}
+
+export enum EqualityPath {
+	none,
+	luna,
+	sol,
 }
 
 export interface PlayerType {
@@ -23,6 +30,8 @@ export interface PlayerType {
 		},
 		learnProgress: number,
 		knowledge: number,
+		campaignProgress: number,
+		campaigns: number,
 	},
 	rebirth: {
 		lunarity: number,
@@ -46,6 +55,8 @@ export interface PlayerType {
 		lunaCommune: number,
 		solSettlement: number,
 		lunaSettlement: number,
+		equalityPath: EqualityPath,
+		politics: number[],
 	},
 	options: {
 		autosave: number,

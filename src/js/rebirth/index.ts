@@ -10,6 +10,7 @@ export const RebirthHandler = {
 		base *= LunaShardUpgrades.lune.effect;
 		base *= SocietyUpgrades.dual.effectOrDefault([1, 1])[1];
 		base *= SettlementHandler.effect;
+		base *= SocietyHandler.rebirthEffect;
 		return base;
 	},
 	resetNoReward() {
@@ -30,7 +31,7 @@ export const RebirthHandler = {
 			SolShardHandler.respec();
 			player.shards.respecSol = false;
 		}
-		CommuneHandler.decayCommune();
+		CommuneHandler.decay();
 		SettlementHandler.decay();
 		this.resetNoReward();
 		if (player.society.unlocked) player.society.isSols = Math.random() < SocietyHandler.solsChance;

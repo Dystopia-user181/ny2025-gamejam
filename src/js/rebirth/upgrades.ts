@@ -89,9 +89,10 @@ export const RebirthUpgrades: Record<number, RebirthUpgradeState> = {
 	24: new RebirthUpgradeState({
 		id: 7,
 		name: "24",
-		description: "×1.2 Knowledge",
-		cost: 2e7,
-		effect: () => 1.2,
+		description: "Increase Knowledge based on Lunarity",
+		cost: 4e7,
+		effect: () => Math.log10(player.rebirth.lunarity + 1e3) / 3 + (player.rebirth.lunarity + 1048576) ** (0.05) - 2,
+		effectDisplay: formatX,
 	}),
 	31: new RebirthUpgradeState({
 		id: 8,

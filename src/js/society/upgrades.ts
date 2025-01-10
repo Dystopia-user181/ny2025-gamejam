@@ -1,7 +1,6 @@
 import { BitUpgradeState } from "@/utils";
 
 import { player } from "@/js/player";
-import { WorkHandler } from "@/js/work";
 
 interface SocietyUpgradeConfig<E> {
 	id: number,
@@ -18,8 +17,6 @@ export class SocietyUpgradeState<E = number> extends BitUpgradeState<SocietyUpgr
 	set bits(x) { player.society.eduUpgrades = x; }
 
 	get cost() { return this.config.cost; }
-
-	get canAfford() { return super.canAfford && player.work.stress < WorkHandler.maxStress; }
 
 	get currencyAmount() { return player.work.knowledge + 1e-14; }
 	set currencyAmount(x) {
@@ -66,7 +63,8 @@ export const SocietyUpgrades = {
 	politics: new SocietyUpgradeState({
 		id: 3,
 		name: "Politics",
-		description: "Influence the world in more nefarious ways",
-		cost: 100,
+		description: `Influence the world in more ways
+			(You can have a break while you wait for this upgrade!)`,
+		cost: 1000,
 	}),
 };

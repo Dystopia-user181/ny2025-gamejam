@@ -4,6 +4,7 @@ import SocietyUpgrade from "./SocietyUpgrade.vue";
 import { format, formatPercents, formatX } from "@/utils";
 
 import { CommuneHandler, SettlementHandler, SocietyHandler, SocietyUpgrades } from "@/js/society";
+import { EqualityPath } from "@/js/player-type";
 import { player } from "@/js/player";
 </script>
 
@@ -27,6 +28,32 @@ import { player } from "@/js/player";
 		</button>
 	</div>
 	<div
+		v-else-if="SocietyUpgrades.politics.isBought && !player.society.equalityPath"
+		class="c-section-society"
+	>
+		<div class="c-header">
+			<b>Politics; You must make a choice.</b>
+			<br>
+			This choice is <b>irreversible</b>. Make sure you export your save if you want to play both sides.
+		</div>
+		<br>
+		<div>
+			<button
+				class="c-button-unspecified"
+				@click="SocietyHandler.chooseLuna()"
+			>
+				Favour Lunespeople
+			</button>
+			OR
+			<button
+				class="c-button-unspecified"
+				@click="SocietyHandler.chooseSol()"
+			>
+				Fight for Equality
+			</button>
+		</div>
+	</div>
+	<div
 		v-else
 		class="c-section-society"
 	>
@@ -39,14 +66,24 @@ import { player } from "@/js/player";
 			</button>
 			What's changed?
 			<br>
-			<br>
 			<div v-if="player.society.unlockedKnowledge">
+				{{ format(player.work.knowledge) }} Knowledge
+				<span v-if="player.society.equalityPath">
+					& {{ format(player.work.campaigns, 3, 0) }} Campaigns
+				</span>
+				<br>
 				<SocietyUpgrade
 					v-for="(upg, upgName) in SocietyUpgrades"
 					:key="'socupg' + upg.config.id"
 					:upg-name="upgName"
 				/>
 			</div>
+			<template v-if="player.society.equalityPath">
+				You are {{ player.society.equalityPath === EqualityPath.sol
+					? "Fighting for equality"
+					: "Favouring Lunespeople" }}.
+				This is the end of balanced content, but you can still play if you wish.
+			</template>
 		</div>
 		<br>
 		<div class="c-comparison">
@@ -59,18 +96,20 @@ import { player } from "@/js/player";
 				<span>{{ formatX(SocietyHandler.stressDual[1]) }} Stress</span>
 				<span>{{ formatX(SocietyHandler.eduDual[0]) }} Knowledge</span>
 				<span>{{ formatX(SocietyHandler.eduDual[1]) }} Knowledge</span>
+				<span>{{ formatX(SocietyHandler.rebirthDual[0]) }} Lunarity</span>
+				<span>{{ formatX(SocietyHandler.rebirthDual[1]) }} Lunarity</span>
 				<button
 					:class="{
 						'c-commune-button': true,
 						'c-button-good': CommuneHandler.lunaMaxed,
-						'c-button-unspecified': CommuneHandler.canAffordLunaCommune,
-						'disabled': !CommuneHandler.canAffordLunaCommune && !CommuneHandler.lunaMaxed
+						'c-button-unspecified': CommuneHandler.canAffordLuna,
+						'disabled': !CommuneHandler.canAffordLuna && !CommuneHandler.lunaMaxed
 					}"
-					@click="CommuneHandler.buyLunaCommune()"
+					@click="CommuneHandler.buyLuna()"
 				>
-					<b>Form a luna commune for +30% work and learning speed to all lunespeople.</b>
+					<b>Form a luna commune for +40% work and learning speed to all lunespeople.</b>
 					<br>
-					It decays upon rebirth if not maintained.
+					It decays upon dying as a lunesperson if not maintained.
 					<br>
 					Currently: {{ formatX(CommuneHandler.lunaCommuneEffect) }}
 					<br>
@@ -80,14 +119,14 @@ import { player } from "@/js/player";
 					:class="{
 						'c-commune-button': true,
 						'c-button-good': CommuneHandler.solMaxed,
-						'c-button-unspecified': CommuneHandler.canAffordSolCommune,
-						'disabled': !CommuneHandler.canAffordSolCommune && !CommuneHandler.solMaxed
+						'c-button-unspecified': CommuneHandler.canAffordSol,
+						'disabled': !CommuneHandler.canAffordSol && !CommuneHandler.solMaxed
 					}"
-					@click="CommuneHandler.buySolCommune()"
+					@click="CommuneHandler.buySol()"
 				>
-					<b>Form a sol commune for +30% work and learning speed to all solspeople.</b>
+					<b>Form a sol commune for +40% work and learning speed to all solspeople.</b>
 					<br>
-					It decays upon rebirth if not maintained.
+					It decays upon dying as a solsperson if not maintained.
 					<br>
 					Currently: {{ formatX(CommuneHandler.solCommuneEffect) }}
 					<br>
@@ -102,9 +141,9 @@ import { player } from "@/js/player";
 					}"
 					@click="SettlementHandler.buyLuna()"
 				>
-					<b>Build a luna settlement ×1.2 Lunarity to all lunespeople.</b>
+					<b>Build a luna settlement for ×1.35 Lunarity to all lunespeople.</b>
 					<br>
-					It decays upon rebirth if not maintained.
+					It decays upon dying as a lunesperson if not maintained.
 					<br>
 					Currently: {{ formatX(SettlementHandler.lunaEffect) }}
 					<br>
@@ -119,9 +158,9 @@ import { player } from "@/js/player";
 					}"
 					@click="SettlementHandler.buySol()"
 				>
-					<b>Build a sols settlement ×1.2 Lunarity to all solspeople.</b>
+					<b>Build a sol settlement for ×1.35 Lunarity to all solspeople.</b>
 					<br>
-					It decays upon rebirth if not maintained.
+					It decays upon dying as a solsperson if not maintained.
 					<br>
 					Currently: {{ formatX(SettlementHandler.solEffect) }}
 					<br>
@@ -176,5 +215,9 @@ import { player } from "@/js/player";
 
 .c-commune-button b {
 	font-size: 13px;
+}
+
+.c-button-good {
+	cursor: default;
 }
 </style>

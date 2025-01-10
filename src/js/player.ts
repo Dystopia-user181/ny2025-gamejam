@@ -29,6 +29,8 @@ export const Player = {
 				},
 				learnProgress: 0,
 				knowledge: 0,
+				campaignProgress: 0,
+				campaigns: 0,
 			},
 			rebirth: {
 				lunarity: 0,
@@ -52,6 +54,8 @@ export const Player = {
 				lunaCommune: 0,
 				solSettlement: 0,
 				lunaSettlement: 0,
+				equalityPath: 0,
+				politics: [],
 			},
 			options: {
 				autosave: 1,

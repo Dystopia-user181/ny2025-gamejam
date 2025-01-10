@@ -104,6 +104,37 @@ import { WorkState } from "@/js/player-type";
 						>>> Knowledge: {{ format(player.work.knowledge) }}
 					</span>
 				</div>
+				<div
+					v-if="player.society.equalityPath"
+					class="c-header"
+				>
+					<br>
+					<template v-if="LearnHandler.canCampaign">
+						<button
+							:class="{
+								'c-button-unspecified c-campaign-btn': true,
+								'c-work-btn--active': player.work.workState === WorkState.campaign,
+							}"
+							:style="{
+								background: `linear-gradient(
+									to right,
+									rgba(30, 160, 30, 0.6),
+									rgba(30, 160, 30, 0.6) ${player.work.campaignProgress * 130 - 30}%,
+									#6669 ${player.work.campaignProgress * 130}%
+								)`
+							}"
+							@click="LearnHandler.toggleCampaign()"
+						>
+							{{ format(LearnHandler.campaignCost, 3, 0) }} Knowled.
+						</button>
+						<span>
+							>>> Campaigns: {{ format(player.work.campaigns, 3, 0) }}
+						</span>
+					</template>
+					<template v-else>
+						You are not qualified to campaign as a Solsperson.
+					</template>
+				</div>
 				<br>
 				Knowledge is gone when you die... But perhaps you can keep knowledge through death with the "Society"
 				tab.
@@ -116,7 +147,12 @@ import { WorkState } from "@/js/player-type";
 			<div class="c-stat">
 				Stress: +{{ format(WorkHandler.stressIncrement) }} / work
 				<span v-if="LearnHandler.unlocked">
+					<br>
 					+{{ format(LearnHandler.stressIncrement) }} / learn
+					<span v-if="player.society.equalityPath">
+						<br>
+						+{{ format(LearnHandler.campaignStress) }} / campaign
+					</span>
 				</span>
 			</div>
 			<div class="c-section-stress">
@@ -156,7 +192,7 @@ import { WorkState } from "@/js/player-type";
 			<h1>
 				Stress: {{ format(player.work.stress) }} / {{ format(WorkHandler.maxStress) }}
 				<br><br>
-				You died due to excess stress
+				You died due to excess Stress
 			</h1>
 			<button
 				class="c-rebirth-btn"
@@ -222,6 +258,13 @@ import { WorkState } from "@/js/player-type";
 
 .c-work-btn {
 	width: 100px;
+	height: 36px;
+	padding: 0;
+	border-width: 1px;
+}
+
+.c-campaign-btn {
+	width: 130px;
 	height: 36px;
 	padding: 0;
 	border-width: 1px;

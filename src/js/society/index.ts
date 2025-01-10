@@ -1,4 +1,5 @@
 import { LunaShardHandler, SolShardHandler } from "@/js/shards";
+import { EqualityPath } from "@/js/player-type";
 import { player } from "@/js/player";
 import { SocietyUpgrades } from "./upgrades";
 
@@ -34,6 +35,14 @@ export const SocietyHandler = {
 	get eduEffect() {
 		return this.eduDual[Number(player.society.isSols)];
 	},
+	get rebirthDual() {
+		if (!this.unlockedDual) return [1, 1];
+		const base = [1, 2];
+		return base;
+	},
+	get rebirthEffect() {
+		return this.rebirthDual[Number(player.society.isSols)];
+	},
 	showChangesModal() {
 		Modals.message.showText(`
 		<b>There are two classes of beings; Solspeople and Lunespeople.
@@ -47,6 +56,22 @@ export const SocietyHandler = {
 		In turn, you can go beyond creating solarity.
 		`);
 	},
+	chooseLuna() {
+		Modals.choosePath.show({
+			afterChoice() {
+				player.society.equalityPath = EqualityPath.luna;
+			},
+			actionText: "take the path of favouring lunespeople",
+		});
+	},
+	chooseSol() {
+		Modals.choosePath.show({
+			afterChoice() {
+				player.society.equalityPath = EqualityPath.sol;
+			},
+			actionText: "take the path of increased equality",
+		});
+	},
 };
 
 export const CommuneHandler = {
@@ -56,16 +81,16 @@ export const CommuneHandler = {
 	get solMaxed() {
 		return player.society.solCommune >= 10;
 	},
-	get canAffordSolCommune() {
+	get canAffordSol() {
 		return player.society.isSols && player.work.knowledge >= this.solCommuneCost && !this.solMaxed;
 	},
-	buySolCommune() {
-		if (!this.canAffordSolCommune) return;
+	buySol() {
+		if (!this.canAffordSol) return;
 		player.work.knowledge -= this.solCommuneCost;
 		player.society.solCommune++;
 	},
 	get solCommuneEffect() {
-		return 1 + player.society.solCommune * 0.3;
+		return 1 + player.society.solCommune * 0.4;
 	},
 	get lunaCommuneCost() {
 		return (player.society.lunaCommune + 1) * 3;
@@ -73,21 +98,21 @@ export const CommuneHandler = {
 	get lunaMaxed() {
 		return player.society.lunaCommune >= 10;
 	},
-	get canAffordLunaCommune() {
+	get canAffordLuna() {
 		return !player.society.isSols && player.work.knowledge >= this.lunaCommuneCost && !this.lunaMaxed;
 	},
-	buyLunaCommune() {
-		if (!this.canAffordLunaCommune) return;
+	buyLuna() {
+		if (!this.canAffordLuna) return;
 		player.work.knowledge -= this.lunaCommuneCost;
 		player.society.lunaCommune++;
 	},
 	get lunaCommuneEffect() {
-		return 1 + player.society.lunaCommune * 0.3;
+		return 1 + player.society.lunaCommune * 0.4;
 	},
 	get effect() {
 		return player.society.isSols ? this.solCommuneEffect : this.lunaCommuneEffect;
 	},
-	decayCommune() {
+	decay() {
 		if (player.society.isSols) {
 			player.society.solCommune = Math.max(player.society.solCommune - 1, 0);
 		} else {
@@ -112,7 +137,7 @@ export const SettlementHandler = {
 		player.society.solSettlement++;
 	},
 	get solEffect() {
-		return 1.2 ** player.society.solSettlement;
+		return 1.35 ** player.society.solSettlement;
 	},
 	get lunaCost() {
 		return (player.society.lunaSettlement + 2) * 5;
@@ -129,7 +154,7 @@ export const SettlementHandler = {
 		player.society.lunaSettlement++;
 	},
 	get lunaEffect() {
-		return 1.2 ** player.society.lunaSettlement;
+		return 1.35 ** player.society.lunaSettlement;
 	},
 	get effect() {
 		return player.society.isSols ? this.solEffect : this.lunaEffect;

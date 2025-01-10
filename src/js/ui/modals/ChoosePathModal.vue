@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import ModalWrapperConfirm from "./ModalWrapperConfirm.vue";
 
-import { RebirthHandler } from "@/js/rebirth";
-
 import { Modals } from ".";
 
-const { afterReset, actionText } = defineProps<{
-	afterReset:() => void,
+const { afterChoice, actionText } = defineProps<{
+	afterChoice:() => void,
 	actionText: string,
 }>();
 </script>
@@ -14,16 +12,15 @@ const { afterReset, actionText } = defineProps<{
 <template>
 	<modal-wrapper-confirm
 		@confirm="
-			afterReset();
-			RebirthHandler.resetNoReward();
+			afterChoice();
 			Modals.hide();
 		"
 	>
 		<template #header>
-			Rebirth reset
+			Choice
 		</template>
 		Are you sure you want to {{ actionText }}?
 		<br>
-		Doing so will restart your current life and give no Lunarity.
+		Doing so is <b>irreversible</b>!
 	</modal-wrapper-confirm>
 </template>

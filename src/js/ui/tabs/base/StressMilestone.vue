@@ -18,7 +18,7 @@ const milestone = StressMilestones[upgName];
 			'c-stress-milestone--unlocked': milestone.canApply
 		}"
 	>
-		<span>{{ format(milestone.config.threshold, 3, 0) }} stress</span>
+		<span>{{ format(milestone.config.threshold, 3, 0) }} Stress</span>
 		<span>{{ milestone.config.effectName }}</span>
 		<i>{{ milestone.config.description }}</i>
 	</div>
