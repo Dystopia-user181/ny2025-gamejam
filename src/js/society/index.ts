@@ -1,6 +1,7 @@
 import { LunaShardHandler, SolShardHandler } from "@/js/shards";
 import { EqualityPath } from "@/js/player-type";
 import { player } from "@/js/player";
+import { PoliticsUpgrades } from "./politics";
 import { SocietyUpgrades } from "./upgrades";
 
 import { Modals } from "@/js/ui/modals";
@@ -14,7 +15,7 @@ export const SocietyHandler = {
 		player.society.unlocked = true;
 	},
 	get solsChance() {
-		return 1 / 3;
+		return 1 / 3 + PoliticsUpgrades.scapeGoat.effect[1];
 	},
 	get unlockedDual() {
 		return SocietyUpgrades.influence.isBought;
@@ -22,6 +23,10 @@ export const SocietyHandler = {
 	get stressDual() {
 		if (!this.unlockedDual) return [1, 1];
 		const base = [0.8, 4];
+		base[0] *= PoliticsUpgrades.labouring.effect[0];
+		base[1] *= PoliticsUpgrades.labouring.effect[1];
+		base[0] *= PoliticsUpgrades.deescalation.effect[0];
+		base[1] *= PoliticsUpgrades.deescalation.effect[1];
 		return base;
 	},
 	get stressEffect() {
@@ -30,6 +35,10 @@ export const SocietyHandler = {
 	get eduDual() {
 		if (!this.unlockedDual) return [1, 1];
 		const base = [1.1, 0.5];
+		base[0] *= PoliticsUpgrades.exchange.effect[0];
+		base[1] *= PoliticsUpgrades.exchange.effect[0];
+		base[0] *= PoliticsUpgrades.symbolic.effect[0];
+		base[1] *= PoliticsUpgrades.symbolic.effect[1];
 		return base;
 	},
 	get eduEffect() {
@@ -38,6 +47,8 @@ export const SocietyHandler = {
 	get rebirthDual() {
 		if (!this.unlockedDual) return [1, 1];
 		const base = [1, 2];
+		base[0] *= PoliticsUpgrades.jealousy.effect[0];
+		base[1] *= PoliticsUpgrades.jealousy.effect[1];
 		return base;
 	},
 	get rebirthEffect() {
@@ -113,6 +124,7 @@ export const CommuneHandler = {
 		return player.society.isSols ? this.solCommuneEffect : this.lunaCommuneEffect;
 	},
 	decay() {
+		if (Math.random() > 0.4) return;
 		if (player.society.isSols) {
 			player.society.solCommune = Math.max(player.society.solCommune - 1, 0);
 		} else {
@@ -160,6 +172,7 @@ export const SettlementHandler = {
 		return player.society.isSols ? this.solEffect : this.lunaEffect;
 	},
 	decay() {
+		if (Math.random() > 0.4) return;
 		if (player.society.isSols) {
 			player.society.solSettlement = Math.max(player.society.solSettlement - 1, 0);
 		} else {
@@ -169,3 +182,4 @@ export const SettlementHandler = {
 };
 
 export * from "./upgrades";
+export * from "./politics";

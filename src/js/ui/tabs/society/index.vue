@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import PoliticsUpgrade from "./PoliticsUpgrade.vue";
 import SocietyUpgrade from "./SocietyUpgrade.vue";
 
 import { format, formatPercents, formatX } from "@/utils";
@@ -66,7 +67,10 @@ import { player } from "@/js/player";
 			</button>
 			What's changed?
 			<br>
-			<div v-if="player.society.unlockedKnowledge">
+			<div
+				v-if="player.society.unlockedKnowledge"
+				class="c-society-upgrade__grid"
+			>
 				{{ format(player.work.knowledge) }} Knowledge
 				<span v-if="player.society.equalityPath">
 					& {{ format(player.work.campaigns, 3, 0) }} Campaigns
@@ -92,12 +96,18 @@ import { player } from "@/js/player";
 			<template v-if="SocietyHandler.unlockedDual">
 				<span>{{ formatPercents(1 - SocietyHandler.solsChance) }} chance to be born as a Lunesperson</span>
 				<span>{{ formatPercents(SocietyHandler.solsChance) }} chance to be born as a Solsperson</span>
+				<PoliticsUpgrade upg-name="scapeGoat" />
 				<span>{{ formatX(SocietyHandler.stressDual[0]) }} Stress</span>
 				<span>{{ formatX(SocietyHandler.stressDual[1]) }} Stress</span>
+				<PoliticsUpgrade upg-name="deescalation" />
+				<PoliticsUpgrade upg-name="labouring" />
 				<span>{{ formatX(SocietyHandler.eduDual[0]) }} Knowledge</span>
 				<span>{{ formatX(SocietyHandler.eduDual[1]) }} Knowledge</span>
+				<PoliticsUpgrade upg-name="symbolic" />
 				<span>{{ formatX(SocietyHandler.rebirthDual[0]) }} Lunarity</span>
 				<span>{{ formatX(SocietyHandler.rebirthDual[1]) }} Lunarity</span>
+				<PoliticsUpgrade upg-name="exchange" />
+				<PoliticsUpgrade upg-name="jealousy" />
 				<button
 					:class="{
 						'c-commune-button': true,
@@ -109,7 +119,7 @@ import { player } from "@/js/player";
 				>
 					<b>Form a luna commune for +40% work and learning speed to all lunespeople.</b>
 					<br>
-					It decays upon dying as a lunesperson if not maintained.
+					It has a chance of decaying upon dying as a lunesperson.
 					<br>
 					Currently: {{ formatX(CommuneHandler.lunaCommuneEffect) }}
 					<br>
@@ -126,7 +136,7 @@ import { player } from "@/js/player";
 				>
 					<b>Form a sol commune for +40% work and learning speed to all solspeople.</b>
 					<br>
-					It decays upon dying as a solsperson if not maintained.
+					It has a chance of decaying upon dying as a solsperson.
 					<br>
 					Currently: {{ formatX(CommuneHandler.solCommuneEffect) }}
 					<br>
@@ -143,7 +153,7 @@ import { player } from "@/js/player";
 				>
 					<b>Build a luna settlement for ×1.35 Lunarity to all lunespeople.</b>
 					<br>
-					It decays upon dying as a lunesperson if not maintained.
+					It has a chance of decaying upon dying as a lunesperson.
 					<br>
 					Currently: {{ formatX(SettlementHandler.lunaEffect) }}
 					<br>
@@ -160,7 +170,7 @@ import { player } from "@/js/player";
 				>
 					<b>Build a sol settlement for ×1.35 Lunarity to all solspeople.</b>
 					<br>
-					It decays upon dying as a solsperson if not maintained.
+					It has a chance of decaying upon dying as a solsperson.
 					<br>
 					Currently: {{ formatX(SettlementHandler.solEffect) }}
 					<br>
@@ -180,7 +190,7 @@ import { player } from "@/js/player";
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	height: 100%;
+	min-height: 100%;
 	width: 100%;
 	padding: 5px;
 	background-image: url(images/graph.png);
@@ -195,6 +205,10 @@ import { player } from "@/js/player";
 
 .c-header {
 	font-size: 16px;
+}
+
+.c-society-upgrade__grid {
+	max-width: 800px;
 }
 
 .c-comparison {

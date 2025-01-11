@@ -1,6 +1,6 @@
 import { player } from "@/js/player";
 
-import { CommuneHandler, SocietyHandler, SocietyUpgrades } from "@/js/society";
+import { CommuneHandler, PoliticsUpgrades, SocietyHandler, SocietyUpgrades } from "@/js/society";
 import { LunaShardUpgrades } from "@/js/shards";
 import { RebirthUpgrades } from "@/js/rebirth/upgrades";
 import { SolUpgrades } from "./solupgrades";
@@ -31,6 +31,7 @@ export const WorkHandler = {
 		base *= RebirthUpgrades[13].effectOrDefault(1);
 		base *= LunaShardUpgrades.solarity.effect;
 		base *= SocietyUpgrades.dual.effectOrDefault([1, 1])[0];
+		if (!player.society.isSols) base *= PoliticsUpgrades.scapeGoat.effect[0];
 		return base;
 	},
 	get stressIncrement() {

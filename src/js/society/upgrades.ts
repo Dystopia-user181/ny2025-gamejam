@@ -1,5 +1,6 @@
 import { BitUpgradeState } from "@/utils";
 
+import { EqualityPath } from "@/js/player-type";
 import { player } from "@/js/player";
 
 interface SocietyUpgradeConfig<E> {
@@ -66,5 +67,19 @@ export const SocietyUpgrades = {
 		description: `Influence the world in more ways
 			(You can have a break while you wait for this upgrade!)`,
 		cost: 1000,
+	}),
+	politics2: new SocietyUpgradeState({
+		id: 4,
+		name: "More Politics",
+		description: "Allow Solspeople to make policies",
+		cost: 1000,
+		isUnlocked: () => player.society.equalityPath === EqualityPath.sol,
+	}),
+	politics3: new SocietyUpgradeState({
+		id: 5,
+		name: "Less Politics",
+		description: "Make campaigning less stressful",
+		cost: 3000,
+		isUnlocked: () => player.society.equalityPath === EqualityPath.sol,
 	}),
 };

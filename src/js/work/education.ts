@@ -30,10 +30,11 @@ export const LearnHandler = {
 	get campaignStress() {
 		let base = 5e6;
 		if (player.society.equalityPath === EqualityPath.sol) base *= 2;
+		if (SocietyUpgrades.politics3.isBought) base /= 2;
 		return base;
 	},
 	get canCampaign() {
-		return !player.society.isSols;
+		return SocietyUpgrades.politics2.isBought || !player.society.isSols;
 	},
 	toggleLearning() {
 		if (player.work.workState !== WorkState.learn) player.work.workState = WorkState.learn;
@@ -44,7 +45,7 @@ export const LearnHandler = {
 		else player.work.workState = WorkState.none;
 	},
 	get campaignCost() {
-		return 20 * (player.work.campaigns + 1);
+		return 10 * (player.work.campaigns + 1);
 	},
 	tick(dt: number) {
 		if (!this.unlocked || player.work.stress >= WorkHandler.maxStress) return;
@@ -58,7 +59,7 @@ export const LearnHandler = {
 				if (!RebirthUpgrades[42].isBought) player.work.workState = WorkState.none;
 			}
 		} else if (player.work.workState === WorkState.campaign) {
-			const dc = Math.min(dt / 6, player.work.knowledge / this.campaignCost, 1 - player.work.campaignProgress);
+			const dc = Math.min(dt / 4, player.work.knowledge / this.campaignCost, 1 - player.work.campaignProgress);
 			player.work.knowledge -= dc * this.campaignCost;
 			player.work.campaignProgress += dc;
 			if (player.work.campaignProgress >= 1 - 1e-14) {
